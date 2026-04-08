@@ -119,7 +119,7 @@
 <div class="bg-white/5 p-4 border border-white/10">
     <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-4">Cool People</h2>
     <div class="flex flex-row gap-4 overflow-x-auto pb-2 scrollbar-hide">
-        <div onclick="showToast('MY BEST FRIEND!111!!!!1!')" class="flex-shrink-0 group cursor-pointer hover:scale-105 active:scale-90 transition-transform">
+        <div onclick="playSound(); showToast('MY BEST FRIEND!111!!!!1!')" class="flex-shrink-0 group cursor-pointer hover:scale-105 active:scale-90 transition-transform">
             <div class="w-16 h-16 border border-white/10 overflow-hidden mb-2">
                 <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bXJqaXIzMjNjYXN0d2JxemsxanM1MzBrNTFjazV4OXI5OXdpNWV3cSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/JH9vsLzqkvBZ4feoCO/giphy.gif" alt="kohrad" class="w-full h-full object-cover group-hover:grayscale-0 transition-all">
             </div>
@@ -189,46 +189,8 @@
         </div>
     </div>
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 glass px-8 py-3 text-white font-bold tracking-widest text-sm opacity-0 transition-all duration-300 translate-y-4 pointer-events-none z-50"> GARY! </div>
-    <script>
-    const USER_ID = "587156686612201482";
-    async function fetchStatus() {
-        try {
-            const res = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`);
-            const { data } = await res.json();
-            document.getElementById('global-name').innerText = data.discord_user.global_name || data.discord_user.username;
-            document.getElementById('username').innerText = `@${data.discord_user.username}`;
-            document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=256`;
-            document.getElementById('banner').src = `https://cdn.discordapp.com/banners/${USER_ID}/a_7dac1d4010494399d68ca8695933ff09?size=1024`;
-            document.getElementById('status-dot').className = `status-dot scale-75 status-${data.discord_status}`;
-            const act = data.activities.find(a => a.type === 4);
-            const avatarUrl = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=32`;
-            document.getElementById('favicon').href = avatarUrl;
-            if(act) {
-                document.getElementById('status-text').innerText = act.state || data.discord_status;
-                if(act.emoji) {
-                    const emoji = document.getElementById('status-emoji');
-                    emoji.src = act.emoji.id ? `https://cdn.discordapp.com/emojis/${act.emoji.id}.webp` : `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${act.emoji.name.codePointAt(0).toString(16)}.png`;
-                    emoji.classList.remove('hidden');
-                }
-            }
-            document.getElementById('app').classList.remove('opacity-0');
-        } catch (e) { console.error(e); }
-    }
-    setInterval(fetchStatus, 30000);
-    fetchStatus();
-    let toastTimeout;
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        toast.innerText = message;
-        clearTimeout(toastTimeout);
-        toast.classList.remove('opacity-0', 'translate-y-4');
-        toast.classList.add('opacity-100', 'translate-y-0');
-        toastTimeout = setTimeout(() => {
-            toast.classList.add('opacity-0', 'translate-y-4');
-            toast.classList.remove('opacity-100', 'translate-y-0');
-        }, 2000);
-    }
-    </script>
+    <audio id="click-sound" src="./sounds/click.mp3" preload="auto"></audio>
+    <script src="./scripts.js"></script>
 </body>
 
 </html>
