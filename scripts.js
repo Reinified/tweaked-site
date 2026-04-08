@@ -40,3 +40,11 @@ const USER_ID = "587156686612201482";
     const sound = new Audio('./sounds/' + file);
     sound.play();
 }
+document.getElementById('enter-btn').addEventListener('click', () => {
+  const screen = document.getElementById('enter-screen');
+  screen.style.transition = 'opacity 0.5s ease';
+  screen.style.opacity = '0';
+  setTimeout(() => {
+    screen.style.display = 'none';
+  }, 500);
+});
