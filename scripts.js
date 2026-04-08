@@ -36,8 +36,7 @@ const USER_ID = "587156686612201482";
             toast.classList.remove('opacity-100', 'translate-y-0');
         }, 2000);
     }
-        function playSound() {
-    const sound = document.getElementById('click-sound');
-    sound.currentTime = 0; 
+        function playSound(file) {
+    const sound = new Audio('./sounds/' + file);
     sound.play();
 }
