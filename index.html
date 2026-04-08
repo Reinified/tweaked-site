@@ -2,50 +2,6 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>soulz</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body {
-    background-image: url("background.png");
-    background-color: #0a0a0a;
-    background-size: cover;
-    background-position: center;
-    color: #ddd;
-    font-family: 'Space Grotesk', sans-serif;
-}
-
-.glass {
-    background: rgba(15, 10, 5, 0.6);
-    backdrop-filter: blur(16px);
-    border: 1px solid #eaa8e1;
-}
-
-.hidden { display: none; }
-</style>
-</head>
-
-<body class="min-h-screen flex items-center justify-center p-4">
-
-<div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden">
-
-<!-- NAV -->
-<div class="flex gap-2 p-4">
-    <button onclick="showPage('home')" class="flex-1 bg-white/10 py-2 text-[10px] font-bold uppercase">Home</button>
-    <button onclick="showPage('about')" class="flex-1 bg-white/10 py-2 text-[10px] font-bold uppercase">About</button>
-    <button onclick="showPage('favorites')" class="flex-1 bg-white/10 py-2 text-[10px] font-bold uppercase">Favorites</button>
-</div>
-
-<!-- HOME (YOUR ENTIRE SITE) -->
-<div id="home">
-
-    <!DOCTYPE html>
-<html lang="en">
-
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>soulz</title>
@@ -79,11 +35,11 @@ body {
     }
 
     .glass {
-    background: rgba(15, 10, 5, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid #eaa8e1;
-}
+        background: rgba(15, 10, 5, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid #eaa8e1;
+    }
 
     @keyframes marquee {
         0% { transform: translateX(0); }
@@ -111,16 +67,16 @@ body {
     .status-offline { background-color: #747f8d; }
 
     .discord-btn {
-    background: #025070;
-    color: white;
-}
+        background: #025070;
+        color: #111827;
+    }
     
     * { border-radius: 0 !important; }
     </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4">
-    <div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden">
+    <div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden opacity-0 transition-opacity duration-500">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
             <div class="animate-marquee whitespace-nowrap flex items-center gap-8">
                 <span>JOIN MY DISCORD SERVER </span><span>JOIN MY DISCORD SERVER </span>
@@ -269,38 +225,4 @@ body {
     </script>
 </body>
 
-</html>
-
-</div>
-
-<!-- ABOUT -->
-<div id="about" class="hidden p-6 text-white">
-    <h1 class="text-xl font-bold mb-4">About Me</h1>
-    <p>
-        Hi, I’m soulz. This is your expanded about section.
-        You can move your existing "About Me" here if you want.
-    </p>
-</div>
-
-<!-- FAVORITES -->
-<div id="favorites" class="hidden p-6 text-white">
-    <h1 class="text-xl font-bold mb-4">Favorites</h1>
-    <p>
-        Put your favorite games, music, etc here.
-    </p>
-</div>
-
-</div>
-
-<script>
-function showPage(page) {
-    document.getElementById('home').classList.add('hidden');
-    document.getElementById('about').classList.add('hidden');
-    document.getElementById('favorites').classList.add('hidden');
-
-    document.getElementById(page).classList.remove('hidden');
-}
-</script>
-
-</body>
 </html>
