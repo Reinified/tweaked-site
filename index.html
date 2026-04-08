@@ -76,10 +76,13 @@
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4">
-    <div id="enter-screen" class="fixed inset-0 bg-black flex items-center justify-center z-50">
-  <button id="enter-btn" class="discord-btn px-8 py-3 text-white font-bold uppercase tracking-widest text-sm">
-    CLICK TO ENTER
-  </button>
+  <div id="enter-screen" class="fixed inset-0 bg-black flex items-center justify-center z-50">
+  <div class="w-48"> <!-- fixed width container -->
+    <button id="enter-btn" class="bg-white/10 p-3 border border-white/10 block w-full text-[10px] font-bold hover:bg-white/20 active:scale-95 uppercase tracking-widest">
+      click to enter...
+    </button>
+  </div>
+</div>
 </div>
     <div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden opacity-0 transition-opacity duration-500">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
