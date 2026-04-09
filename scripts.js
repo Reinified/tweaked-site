@@ -42,8 +42,14 @@ const USER_ID = "587156686612201482";
 }
 document.getElementById('enter-btn').addEventListener('click', () => {
   const screen = document.getElementById('enter-screen');
+  const music = document.getElementById('bg-music');
+
+  music.volume = 0.5; 
+  music.play();
+
   screen.style.transition = 'opacity 0.5s ease';
   screen.style.opacity = '0';
+
   setTimeout(() => {
     screen.style.display = 'none';
   }, 500);
