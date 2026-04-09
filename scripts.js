@@ -67,42 +67,11 @@ function formatTime(seconds) {
 }
 
 document.getElementById('enter-btn').addEventListener('click', () => {
+  const music = document.getElementById('bg-music');
+  const screen = document.getElementById('enter-screen');
+
   music.volume = 0.5;
   music.play();
 
-  
-  const screen = document.getElementById('enter-screen');
-  screen.style.transition = 'opacity 0.5s ease';
-  screen.style.opacity = '0';
-  setTimeout(() => {
-    screen.style.display = 'none';
-  }, 500);
-
-  
-  controls.style.opacity = '1';
-  controls.style.pointerEvents = 'auto';
-});
-
-playPauseBtn.addEventListener('click', () => {
-  if (music.paused) {
-    music.play();
-    playPauseBtn.textContent = 'Pause';
-  } else {
-    music.pause();
-    playPauseBtn.textContent = 'Play';
-  }
-});
-
-music.addEventListener('timeupdate', () => {
-  const current = music.currentTime;
-  const duration = music.duration || 0;
-  const progressPercent = (current / duration) * 100 || 0;
-
-  progressBar.value = progressPercent;
-  timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
-});
-
-progressBar.addEventListener('input', () => {
-  const duration = music.duration || 0;
-  music.currentTime = (progressBar.value / 100) * duration;
+  screen.style.display = 'none';
 });
