@@ -18,17 +18,13 @@
 
 <body class="min-h-screen flex items-center justify-center p-4">
   <div id="enter-screen" class="fixed inset-0 bg-black flex items-center justify-center z-50">
-  <div class="w-48"> 
+  <div class="w-48"> <!-- fixed width container -->
     <button id="enter-btn" class="bg-white/10 p-3 border border-white/10 block w-full text-[10px] font-bold hover:bg-white/20 active:scale-95 uppercase tracking-widest">
       click to enter...
     </button>
   </div>
 </div>
-<audio id="bg-music" src="./sounds/afterglow.mp3" preload="auto"></audio>
-<div id="music-controls">
-  <button id="play-pause-btn">Pause</button>
-  <input id="progress-bar" type="range" min="0" max="100" value="0" step="0.1">
-  <span id="time-display">0:00 / 0:00</span>
+    <audio id="bg-music" src="./sounds/afterglow.mp3" loop></audio>
 </div>
     <div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden opacity-0 transition-opacity duration-500">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
@@ -142,6 +138,13 @@
             </div>
         </div>
     </div>
+    <audio id="click-sound" src="./sounds/click.mp3" preload="auto"></audio>
+    <div id="music-controls" style="position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); border-top: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; display: flex; align-items: center; gap: 12px; opacity: 0; pointer-events: none; transition: opacity 0.5s;">
+  <button id="play-pause-btn" style="color: white; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.2); background: transparent; cursor: pointer; user-select: none;">
+    Pause
+  </button>
+  <input id="progress-bar" type="range" min="0" max="100" value="0" step="0.1" style="flex-grow: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); accent-color: #ffad5b; cursor: pointer;">
+  <span id="time-display" style="color: white; font-family: monospace; font-size: 0.75rem; width: 70px; text-align: right;">0:00 / 0:00</span>
     <script src="./scripts.js"></script>
 </div>
 </body>
