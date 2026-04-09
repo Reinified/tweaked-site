@@ -49,3 +49,48 @@
     }
     
     * { border-radius: 0 !important; }
+
+
+#music-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0; /* hidden initially */
+    pointer-events: none; /* disable until shown */
+    transition: opacity 0.5s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#play-pause-btn {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+#progress-bar {
+    flex-grow: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    accent-color: #ffad5b; 
+    cursor: pointer;
+}
+
+#time-display {
+    color: white;
+    font-family: monospace;
+    font-size: 0.75rem;
+    width: 70px;
+    text-align: right;
+}
