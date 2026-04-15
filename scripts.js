@@ -59,18 +59,3 @@ function playSound(file) {
     const sound = new Audio('./sounds/' + file);
     sound.play();
 }
-
-// --- ENTRY SCREEN ---
-const enterBtn = document.getElementById('enter-btn');
-if (enterBtn) {
-    enterBtn.addEventListener('click', () => {
-        const screen = document.getElementById('enter-screen');
-        
-        screen.style.transition = 'opacity 0.5s ease';
-        screen.style.opacity = '0';
-        
-        setTimeout(() => {
-            screen.style.display = 'none';
-        }, 500);
-    });
-}
