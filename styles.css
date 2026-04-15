@@ -48,28 +48,42 @@ body {
     color: #111827;
 }
 
-/* --- NEW NAVIGATION BUTTONS --- */
-.nav-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.1); /* Matches bg-white/10 */
-    border: 1px solid rgba(255, 255, 255, 0.05); /* Matches border-white/5 */
-    color: #ddd;
+/* --- DISCORD-STYLE TEXT TABS --- */
+.discord-tab {
+    position: relative;
+    color: #b5bac1; /* Discord's default inactive text color */
     text-decoration: none;
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 0;
     cursor: pointer;
+    transition: color 0.15s ease;
 }
 
-.nav-btn:hover {
-    background: rgba(255, 255, 255, 0.2); /* Matches hover:bg-white/20 */
-    border-color: rgba(255, 255, 255, 0.1);
+/* The line underneath (hidden by default) */
+.discord-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #eaa8e1; /* Matches your pink border color */
+    border-radius: 2px 2px 0 0;
+    transform: scaleX(0); /* Shrinks the line to invisible */
+    transition: transform 0.2s ease;
 }
 
-.nav-btn:active {
-    transform: scale(0.95); /* Matches active:scale-95 */
+/* What happens when you hover over it */
+.discord-tab:hover {
+    color: #dbdee1; /* Discord's hover text color */
+}
+
+.discord-tab:hover::after {
+    transform: scaleX(1); /* Expands the line to full width */
+}
+
+/* What happens when you are actively clicking/holding */
+.discord-tab:active {
+    color: #ffffff;
 }
