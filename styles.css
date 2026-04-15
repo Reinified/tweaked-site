@@ -51,7 +51,7 @@ body {
 /* --- DISCORD-STYLE TEXT TABS --- */
 .discord-tab {
     position: relative;
-    color: #b5bac1; /* Discord's default inactive text color */
+    color: #b5bac1; /* Default inactive color */
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -68,22 +68,33 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #eaa8e1; /* Matches your pink border color */
+    background-color: #eaa8e1;
     border-radius: 2px 2px 0 0;
-    transform: scaleX(0); /* Shrinks the line to invisible */
+    transform: scaleX(0);
     transition: transform 0.2s ease;
 }
 
-/* What happens when you hover over it */
+/* Prevent links from turning purple when clicked */
+.discord-tab:visited {
+    color: #b5bac1;
+}
+
+/* What happens when you hover */
 .discord-tab:hover {
-    color: #dbdee1; /* Discord's hover text color */
+    color: #dbdee1;
 }
 
 .discord-tab:hover::after {
-    transform: scaleX(1); /* Expands the line to full width */
+    transform: scaleX(1);
 }
 
-/* What happens when you are actively clicking/holding */
-.discord-tab:active {
+/* ACTIVE STATE: If the link URL matches the current page URL */
+.discord-tab[href*="index"], 
+.discord-tab[href*="board"] {
     color: #ffffff;
+}
+
+.discord-tab[href*="index"]::after, 
+.discord-tab[href*="board"]::after {
+    transform: scaleX(1);
 }
