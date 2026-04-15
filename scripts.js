@@ -62,32 +62,27 @@ function playSound(file) {
 
 // --- RANDOM GARY & GOOBER IMAGE LOADER ---
 function loadCatImages() {
-    const img1Box = document.getElementById('cat-img-1');
-    const img2Box = document.getElementById('cat-img-2');
+    const garyBox = document.getElementById('cat-img-1');
+    const gooberBox = document.getElementById('cat-img-2');
 
-    if (!img1Box) return; 
+    if (!garyBox) return; 
 
     const getRandomNum = (max) => Math.floor(Math.random() * max) + 1;
-
-    const getRandomCatUrl = () => {
-        const isGary = Math.random() > 0.5; 
-        if (isGary) {
-            return `https://cdn.garythe.cat/Gary/Gary${getRandomNum(675)}.jpg`;
-        } else {
-            return `https://cdn.garythe.cat/Goober/Goober${getRandomNum(72)}.jpg`;
-        }
-    };
 
     const createImg = (url) => {
         const img = document.createElement('img');
         img.src = url;
-        img.alt = "Gary or Goober";
-        img.className = "w-full h-full object-cover";
+        img.alt = "Cat photo";
+        // Added object-center so the cat's face isn't cut off!
+        img.className = "w-full h-full object-cover object-center";
         return img;
     };
 
-    img1Box.appendChild(createImg(getRandomCatUrl()));
-    img2Box.appendChild(createImg(getRandomCatUrl()));
+    // Box 1 is strictly Gary
+    garyBox.appendChild(createImg(`https://cdn.garythe.cat/Gary/Gary${getRandomNum(675)}.jpg`));
+    
+    // Box 2 is strictly Goober
+    gooberBox.appendChild(createImg(`https://cdn.garythe.cat/Goober/Goober${getRandomNum(72)}.jpg`));
 }
 
 loadCatImages();
