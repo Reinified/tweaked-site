@@ -51,7 +51,7 @@ body {
 /* --- DISCORD-STYLE TEXT TABS --- */
 .discord-tab {
     position: relative;
-    color: #b5bac1; /* Default inactive color */
+    color: #b5bac1;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -60,7 +60,6 @@ body {
     transition: color 0.15s ease;
 }
 
-/* The line underneath (hidden by default) */
 .discord-tab::after {
     content: '';
     position: absolute;
@@ -74,12 +73,10 @@ body {
     transition: transform 0.2s ease;
 }
 
-/* Prevent links from turning purple when clicked */
 .discord-tab:visited {
     color: #b5bac1;
 }
 
-/* What happens when you hover */
 .discord-tab:hover {
     color: #dbdee1;
 }
@@ -88,13 +85,19 @@ body {
     transform: scaleX(1);
 }
 
-/* ACTIVE STATE: If the link URL matches the current page URL */
-.discord-tab[href*="index"], 
-.discord-tab[href*="board"] {
+/* SMART ACTIVE STATE: Checks the actual URL you are on */
+/* If URL ends with "/" or "index.html" */
+body[data-page="board"] .discord-tab[href*="index"] {
     color: #ffffff;
 }
+body[data-page="board"] .discord-tab[href*="index"]::after {
+    transform: scaleX(1);
+}
 
-.discord-tab[href*="index"]::after, 
-.discord-tab[href*="board"]::after {
+/* If URL contains "interests" */
+body[data-page="interests"] .discord-tab[href*="interests"] {
+    color: #ffffff;
+}
+body[data-page="interests"] .discord-tab[href*="interests"]::after {
     transform: scaleX(1);
 }
