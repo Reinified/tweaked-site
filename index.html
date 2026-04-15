@@ -24,9 +24,9 @@
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4">
-
+    
     <!-- Main App -->
-    <div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden opacity-0 transition-opacity duration-500">
+    <div id="app" class="w-full max-w-md md:max-w-4xl glass overflow-hidden">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
             <div class="animate-marquee whitespace-nowrap flex items-center gap-8">
                 <span>JOIN MY DISCORD SERVER </span><span>JOIN MY DISCORD SERVER </span>
@@ -52,92 +52,47 @@
                 </div>
             </div>
         </div>
-        <div class="pt-14 md:pt-20 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-5">
-                <div>
-                    <h1 id="global-name" class="text-2xl md:text-3xl font-bold text-white">soulz</h1>
-                    <p id="username" class="text-[#ffad5b] text-xs md:text-sm italic opacity-70"></p>
-                    <div class="mt-3 flex items-center gap-2 bg-white/5 p-3 border border-white/10">
-                        <img id="status-emoji" src="" class="w-4 h-4 hidden">
-                        <p id="status-text" class="text-gray-400 text-xs">Loading...</p>
-                    </div>
+        
+        <!-- Changed to a single column layout -->
+        <div class="pt-14 md:pt-20 px-6 pb-6 max-w-2xl mx-auto space-y-5">
+            
+            <!-- Bio Section -->
+            <div>
+                <h1 id="global-name" class="text-2xl md:text-3xl font-bold text-white">soulz</h1>
+                <p id="username" class="text-[#ffad5b] text-xs md:text-sm italic opacity-70"></p>
+                <div class="mt-3 flex items-center gap-2 bg-white/5 p-3 border border-white/10">
+                    <img id="status-emoji" src="" class="w-4 h-4 hidden">
+                    <p id="status-text" class="text-gray-400 text-xs">Loading...</p>
                 </div>
-                <div class="bg-black/20 p-4 border border-white/5">
-                    <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">About Me</h2>
-                    <p class="text-xs leading-relaxed text-gray-300"> Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats. I’ve grown up with cats (and dogs), and cats are the best. I have a lot of pics of <a href="https://photos.google.com/share/AF1QipNMMGGcN46RUtQ2-Ron0lV4t5JL7lpWP7gIbTMN-fgILGXcRNyS0x2duTROPvdg8w?key=d01uNllWYXdDMlJlbUVjU2VmeFpkajBaQmVIbm5B" target="_blank" rel="noopener noreferrer" class="text-[#ffad5b] underline hover:opacity-80 transition-opacity">my cars</a>. </p>
-                </div>
-                <div class="bg-white/5 p-4 border border-white/10">
-                    <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-4">Cool People</h2>
-                    <div class="flex flex-row gap-4 overflow-x-auto pb-2 scrollbar-hide">
-                        <div onclick="playSound('kohrad.mp3'); showToast('MY BEST FRIEND!111!!!!1!')" class="flex-shrink-0 group cursor-pointer hover:scale-105 active:scale-90 transition-transform">
-                            <div class="w-16 h-16 border border-white/10 overflow-hidden mb-2">
-                                <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bXJqaXIzMjNjYXN0d2JxemsxanM1MzBrNTFjazV4OXI5OXdpNWV3cSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/JH9vsLzqkvBZ4feoCO/giphy.gif" alt="kohrad" class="w-full h-full object-cover group-hover:grayscale-0 transition-all">
-                            </div>
-                            <p class="text-[10px] text-white font-bold text-center">kohrad</p>
-                        </div>
-                        <a href="https://twixxt.defautluser0.xyz/" target="_blank" class="flex-shrink-0 group cursor-pointer transition-all hover:scale-105 active:scale-90">
-                            <div class="w-16 h-16 border border-white/10 overflow-hidden mb-2">
-                                <img src="https://api.lanyard.rest/798177330010521630.png" alt="twixxty" class="w-full h-full object-cover group-hover:grayscale-0 transition-all">
-                            </div>
-                            <p class="text-[10px] text-white font-bold text-center">twixxty</p>
-                        </a>
-                        <a href="https://lamp.delivery" target="_blank" class="flex-shrink-0 group cursor-pointer transition-all hover:scale-105 active:scale-90">
-                            <div class="w-16 h-16 border border-white/10 overflow-hidden mb-2">
-                                <img src="https://api.lanyard.rest/650805815623680030.png" alt="lamp" class="w-full h-full object-cover group-hover:grayscale-0 transition-all">
-                            </div>
-                            <p class="text-[10px] text-white font-bold text-center">lamp</p>
-                        </a>
-                        <a href="https://www.raincord.dev/" target="_blank" class="flex-shrink-0 group cursor-pointer transition-all hover:scale-105 active:scale-90">
-                            <div class="w-16 h-16 border border-white/10 overflow-hidden mb-2">
-                                <img src="https://cdn.discordapp.com/avatars/767650984175992833/8e4b8d1aa22accb4d331ad8efb846bce.webp" alt="coco" class="w-full h-full object-cover group-hover:grayscale-0 transition-all">
-                            </div>
-                            <p class="text-[10px] text-white font-bold text-center">coco</p>
-                        </a>
-                    </div>
-                </div>
-                <a href="https://00387.carrd.co/" target="_blank" class="w-full block bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest border border-white/5">
-                    Check out my carrd for more!
-                </a>
             </div>
-            <div class="space-y-5">
-                <div class="bg-white/5 p-4 border border-white/10">
-                    <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-3">Honorable mentions</h2>
-                    <div class="grid grid-cols-2 gap-2 mb-3">
-                        <div onclick="showToast('GARY!')" class="aspect-square bg-black/20 border border-white/5 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
-                            <img src="./cats/GARY.PNG" alt="Gary" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
-                        </div>
-                        <div onclick="showToast('GOOBER!!!!!!')" class="aspect-square bg-black/20 border border-white/10 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
-                            <img src="./cats/GOOBER.PNG" alt="Goober" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="bg-black/20 p-3 border border-white/5">
-                        <p class="text-[9px] text-gray-400 leading-tight"> Gary and Goober are not my cats, but the owner sells <a href="https://drip.garythe.cat/" class="text-[#ffad5b] underline ml-1">merch</a> and was kind enough to give me a coffee mug for Christmas. This ad space is necessary, please support him if you can.
-                        </p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <a href="https://en.wikipedia.org/wiki/LittleBigPlanet" target="_blank" rel="noopener noreferrer" class="bg-white/5 p-3 border border-white/10 block transition-all hover:bg-white/20 active:scale-95">
-                        <p class="text-[9px] font-bold text-[#ffad5b] uppercase">Favorite Game</p>
-                        <p class="text-xs text-white">LittleBigPlanet</p>
-                    </a>
-                    <a href="https://www.smashintopieces.com/" target="_blank" rel="noopener noreferrer" class="bg-white/5 p-3 border border-white/10 block transition-all hover:bg-white/20 active:scale-95">
-                        <p class="text-[9px] font-bold text-[#ffad5b] uppercase">Favorite Band</p>
-                        <p class="text-xs text-white">Smash Into Pieces</p>
-                    </a>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex gap-2">
-                        <a href="https://discord.com/users/587156686612201482" target="_blank" class="flex-1 bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest">Discord</a>
-                        <a href="https://instagram.com/soulz0387" class="flex-1 bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest">Instagram</a>
-                    </div>
-                    <div class="flex gap-2">
-                        <a href="https://fortnitetracker.com/profile/all/XoJoshandMJoX123" target="_blank" class="flex-1 bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest">Fortnite</a>
-                        <a href="https://psnprofiles.com/xJayzTheWeird_" target="_blank" class="flex-1 bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest">PlayStation</a>
-                    </div>
-                </div>
-                <!-- NEW NAVIGATION BUTTON -->
-                <a href="interests.html" class="nav-btn w-full text-center block">My Interests &rarr;</a>
+
+            <div class="bg-black/20 p-4 border border-white/5">
+                <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">About Me</h2>
+                <p class="text-xs leading-relaxed text-gray-300"> Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats. I’ve grown up with cats (and dogs), and cats are the best. I have a lot of pics of <a href="https://photos.google.com/share/AF1QipNMMGGcN46RUtQ2-Ron0lV4t5JL7lpWP7gIbTMN-fgILGXcRNyS0x2duTROPvdg8w?key=d01uNllWYXdDMlJlbUVjU2VmeFpkajBaQmVIbm5B" target="_blank" rel="noopener noreferrer" class="text-[#ffad5b] underline hover:opacity-80 transition-opacity">my cars</a>. </p>
             </div>
+
+            <!-- Honorable Mentions (Cats) -->
+            <div class="bg-white/5 p-4 border border-white/10">
+                <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-3">Honorable mentions</h2>
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <div onclick="showToast('GARY!')" class="aspect-square bg-black/20 border border-white/5 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
+                        <img src="./cats/GARY.PNG" alt="Gary" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+                    </div>
+                    <div onclick="showToast('GOOBER!!!!!!')" class="aspect-square bg-black/20 border border-white/10 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
+                        <img src="./cats/GOOBER.PNG" alt="Goober" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+                <div class="bg-black/20 p-3 border border-white/5">
+                    <p class="text-[9px] text-gray-400 leading-tight"> Gary and Goober are not my cats, but the owner sells <a href="https://drip.garythe.cat/" class="text-[#ffad5b] underline ml-1"> merch</a> and was kind enough to give me a coffee mug for Christmas. This ad space is necessary, please support him if you can.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navigation Button -->
+            <a href="interests.html" class="w-full block bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest border border-white/5">
+                My Interests &rarr;
+            </a>
+
         </div>
     </div>
 
