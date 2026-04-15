@@ -59,3 +59,46 @@ function playSound(file) {
     const sound = new Audio('./sounds/' + file);
     sound.play();
 }
+
+// --- RANDOM GARY & GOOBER IMAGE LOADER ---
+function loadCatImages() {
+    const img1Box = document.getElementById('cat-img-1');
+    const img2Box = document.getElementById('cat-img-2');
+    const img3Box = document.getElementById('cat-img-3');
+
+    // If the boxes don't exist on the page, do nothing
+    if (!img1Box) return; 
+
+    // Function to get a random number between 1 and a max limit
+    const getRandomNum = (max) => Math.floor(Math.random() * max) + 1;
+
+    // Function to pick a random cat and generate its exact URL
+    const getRandomCatUrl = () => {
+        // 50% chance for Gary, 50% chance for Goober
+        const isGary = Math.random() > 0.5; 
+        
+        if (isGary) {
+            const num = getRandomNum(675); // Gary max is 675
+            return `https://cdn.garythe.cat/Gary/Gary${num}.jpg`;
+        } else {
+            const num = getRandomNum(72);  // Goober max is 72
+            return `https://cdn.garythe.cat/Goober/Goober${num}.jpg`;
+        }
+    };
+
+    // Function to create the HTML image element
+    const createImg = (url) => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = "Gary or Goober";
+        img.className = "w-full h-full object-cover";
+        return img;
+    };
+
+    // Inject the random images into the 3 boxes
+    img1Box.appendChild(createImg(getRandomCatUrl()));
+    img2Box.appendChild(createImg(getRandomCatUrl()));
+    img3Box.appendChild(createImg(getRandomCatUrl()));
+}
+
+loadCatImages();
