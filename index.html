@@ -23,10 +23,8 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 
-<!-- make the glass wide i guess -->
 <body class="min-h-screen flex items-center justify-center p-4 md:p-8">
     
-    <!-- Changed max-w to max-w-sm to make the box thinner -->
     <div id="app" class="w-full max-w-lg glass overflow-hidden">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
             <div class="animate-marquee whitespace-nowrap flex items-center gap-8">
@@ -54,46 +52,64 @@
             </div>
         </div>
         
-        <div class="pt-14 px-6 pb-6 space-y-5">
+        <!-- Added md:grid-cols-2 back to split the sides -->
+        <div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- Bio Section -->
-            <div>
-                <h1 id="global-name" class="text-2xl font-bold text-white">soulz</h1>
-                <p id="username" class="text-[#ffad5b] text-xs italic opacity-70"></p>
-                <div class="mt-3 flex items-center gap-2 bg-white/5 p-3 border border-white/10">
-                    <img id="status-emoji" src="" class="w-4 h-4 hidden">
-                    <p id="status-text" class="text-gray-400 text-xs">Loading...</p>
-                </div>
-            </div>
-
-            <div class="bg-black/20 p-4 border border-white/5">
-                <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">About Me</h2>
-                <p class="text-xs leading-relaxed text-gray-300"> Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats. I’ve grown up with cats (and dogs), and cats are the best. I have a lot of pics of <a href="https://photos.google.com/share/AF1QipNMMGGcN46RUtQ2-Ron0lV4t5JL7lpWP7gIbTMN-fgILGXcRNyS0x2duTROPvdg8w?key=d01uNllWYXdDMlJlbUVjU2VmeFpkajBaQmVIbm5B" target="_blank" rel="noopener noreferrer" class="text-[#ffad5b] underline hover:opacity-80 transition-opacity">my cars</a>. </p>
-            </div>
-
-            <!-- Honorable Mentions (Cats) -->
-            <div class="bg-white/5 p-4 border border-white/10">
-                <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-3">Honorable mentions</h2>
-                <div class="grid grid-cols-2 gap-2 mb-3">
-                    <div onclick="showToast('GARY!')" class="aspect-square bg-black/20 border border-white/5 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
-                        <img src="./cats/GARY.PNG" alt="Gary" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
-                    </div>
-                    <div onclick="showToast('GOOBER!!!!!!')" class="aspect-square bg-black/20 border border-white/10 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
-                        <img src="./cats/GOOBER.PNG" alt="Goober" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+            <!-- LEFT SIDE (Your original content) -->
+            <div class="space-y-5">
+                <div>
+                    <h1 id="global-name" class="text-2xl font-bold text-white">soulz</h1>
+                    <p id="username" class="text-[#ffad5b] text-xs italic opacity-70"></p>
+                    <div class="mt-3 flex items-center gap-2 bg-white/5 p-3 border border-white/10">
+                        <img id="status-emoji" src="" class="w-4 h-4 hidden">
+                        <p id="status-text" class="text-gray-400 text-xs">Loading...</p>
                     </div>
                 </div>
-                <div class="bg-black/20 p-3 border border-white/5">
-                    <p class="text-[9px] text-gray-400 leading-tight"> Gary and Goober are not my cats, but the owner sells <a href="https://drip.garythe.cat/" class="text-[#ffad5b] underline ml-1">merch</a> and was kind enough to give me a coffee mug for Christmas. This ad space is necessary, please support him if you can.
-                    </p>
+
+                <div class="bg-black/20 p-4 border border-white/5">
+                    <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">About Me</h2>
+                    <p class="text-xs leading-relaxed text-gray-300"> Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats. I’ve grown up with cats (and dogs), and cats are the best. I have a lot of pics of <a href="https://photos.google.com/share/AF1QipNMMGGcN46RUtQ2-Ron0lV4t5JL7lpWP7gIbTMN-fgILGXcRNyS0x2duTROPvdg8w?key=d01uNllWYXdDMlJlbUVjU2VmeFpkajBaQmVIbm5B" target="_blank" rel="noopener noreferrer" class="text-[#ffad5b] underline hover:opacity-80 transition-opacity">my cars</a>. </p>
+                </div>
+
+                <div class="bg-white/5 p-4 border border-white/10">
+                    <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-3">Honorable mentions</h2>
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div onclick="showToast('GARY!')" class="aspect-square bg-black/20 border border-white/5 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
+                            <img src="./cats/GARY.PNG" alt="Gary" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+                        </div>
+                        <div onclick="showToast('GOOBER!!!!!!')" class="aspect-square bg-black/20 border border-white/10 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 cursor-pointer">
+                            <img src="./cats/GOOBER.PNG" alt="Goober" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="bg-black/20 p-3 border border-white/5">
+                        <p class="text-[9px] text-gray-400 leading-tight"> Gary and Goober are not my cats, but the owner sells <a href="https://drip.garythe.cat/" class="text-[#ffad5b] underline ml-1">merch</a> and was kind enough to give me a coffee mug for Christmas. This ad space is necessary, please support him if you can.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Navigation Button -->
+            <!-- RIGHT SIDE (3 Placeholder Images) -->
+            <div class="space-y-5">
+                <div class="aspect-square bg-black/20 border border-white/5 overflow-hidden flex items-center justify-center">
+                    <span class="text-gray-500 text-xs uppercase tracking-widest">Image 1</span>
+                </div>
+                <div class="aspect-square bg-black/20 border border-white/5 overflow-hidden flex items-center justify-center">
+                    <span class="text-gray-500 text-xs uppercase tracking-widest">Image 2</span>
+                </div>
+                <div class="aspect-square bg-black/20 border border-white/5 overflow-hidden flex items-center justify-center">
+                    <span class="text-gray-500 text-xs uppercase tracking-widest">Image 3</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Button at the very bottom spanning the full width -->
+        <div class="px-6 pb-6">
             <a href="interests.html" class="w-full block bg-white/10 text-center py-3 text-[10px] font-bold hover:bg-white/20 active:scale-95 transition-all uppercase tracking-widest border border-white/5">
                 My Interests &rarr;
             </a>
-
         </div>
+
     </div>
 
     <audio id="click-sound" src="./sounds/click.mp3" preload="auto"></audio>
