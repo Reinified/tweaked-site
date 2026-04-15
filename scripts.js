@@ -60,10 +60,10 @@ function playSound(file) {
     sound.play();
 }
 
-// --- RANDOM GARY & GOOBER IMAGE LOADER ---
-function loadCatImages() {
-    const garyBox = document.getElementById('cat-img-1');
-    const gooberBox = document.getElementById('cat-img-2');
+// --- SMALL RANDOM CAT LOADER ---
+function loadSmallCatImages() {
+    const garyBox = document.getElementById('small-gary');
+    const gooberBox = document.getElementById('small-goober');
 
     if (!garyBox) return; 
 
@@ -72,17 +72,13 @@ function loadCatImages() {
     const createImg = (url) => {
         const img = document.createElement('img');
         img.src = url;
-        img.alt = "Cat photo";
-        // Added object-center so the cat's face isn't cut off!
+        img.alt = "Cat";
         img.className = "w-full h-full object-cover object-center";
         return img;
     };
 
-    // Box 1 is strictly Gary
     garyBox.appendChild(createImg(`https://cdn.garythe.cat/Gary/Gary${getRandomNum(675)}.jpg`));
-    
-    // Box 2 is strictly Goober
     gooberBox.appendChild(createImg(`https://cdn.garythe.cat/Goober/Goober${getRandomNum(72)}.jpg`));
 }
 
-loadCatImages();
+loadSmallCatImages();
