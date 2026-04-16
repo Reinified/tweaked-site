@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4 md:p-8" data-page="interests">
+<body class="h-screen overflow-hidden flex items-center justify-center p-4 md:p-8" data-page="interests">
     
-    <div id="app" class="w-full max-w-4xl glass overflow-hidden">
+    <div id="app" class="w-full max-w-4xl glass overflow-hidden max-h-full flex flex-col">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
             <div class="animate-marquee whitespace-nowrap flex items-center gap-8">
                 <span>JOIN MY DISCORD SERVER </span><span>JOIN MY DISCORD SERVER </span>
@@ -41,7 +41,7 @@
         </div>
         
         <!-- Added md:grid-cols-2 back to split the sides -->
-        <div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <<div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto flex-1">
 
             <!-- LEFT SIDE -->
             <div class="space-y-5">
