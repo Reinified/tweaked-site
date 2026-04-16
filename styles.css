@@ -12,6 +12,10 @@ body {
     overflow-x: hidden;
 }
 
+#global-name {
+    font-family: 'Press Start 2P', cursive;
+}
+
 .glass {
     background: rgba(15, 10, 5, 0.6);
     backdrop-filter: blur(16px);
@@ -101,40 +105,4 @@ body[data-page="interests"] .discord-tab[href*="interests"] {
 }
 body[data-page="interests"] .discord-tab[href*="interests"]::after {
     transform: scaleX(1);
-}
-
-/* --- THIS PROBABLY WONT WORK LOL --- */
-.discord-toon {
-    font-family: 'Press Start 2P', cursive;
-    position: relative;
-    display: inline-block;
-    color: transparent; /* Hides the base text */
-}
-
-/* The dark red outline/shadow layer sitting behind */
-.discord-toon::before {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    color: #630310;
-    text-shadow: 
-        2px 2px 0px #630310,
-        -1px -1px 0px #630310, 
-        1px -1px 0px #630310,  
-        -1px 1px 0px #630310;
-}
-
-/* The clean white-to-red gradient layer on top */
-.discord-toon::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    background: linear-gradient(to bottom, #ffffff, #630310);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
