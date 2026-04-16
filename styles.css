@@ -106,11 +106,19 @@ body[data-page="interests"] .discord-tab[href*="interests"]::after {
 /* --- DISCORD TOON TEXT EFFECT --- */
 .discord-toon {
     font-family: 'Press Start 2P', cursive;
-    color: #630310;
-    -webkit-text-stroke: 1px #000000; /* Black outline */
+    
+    /* This creates the white-to-red gradient on the face of the letters */
+    background: linear-gradient(to bottom, #ffffff, #630310);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    /* This creates the dark red 3D "border/shadow" effect */
     text-shadow: 
-        2px 2px 0px #000000,  /* 3D drop shadow */
-        -1px -1px 0 #000000, /* Extra outline corners */
-        1px -1px 0 #000000,  
-        -1px 1px 0 #000000;  
+        2px 2px 0px #630310,
+        -1px -1px 0 #630310, 
+        1px -1px 0 #630310,  
+        -1px 1px 0 #630310,
+        0px 2px 0px #630310,
+        2px 0px 0px #630310;
 }
