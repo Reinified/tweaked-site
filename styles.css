@@ -149,3 +149,10 @@ body[data-page="interests"] .discord-tab[href*="interests"]::after {
 .game-tooltip:hover::before {
     opacity: 1;
 }
+
+/* Stop left side scrolling */
+.sticky-left {
+    align-self: start;
+    position: sticky;
+    top: 0;
+}
