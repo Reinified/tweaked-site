@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('global-name').innerText = "Barack Obama";
     document.getElementById('username').innerText = "@obamajuankinobi";
-    document.getElementById('avatar').src = "./assets/profiles/obamajuankinobi.png"; // Change to your image path
+    document.getElementById('avatar').src = "./assets/obamna.png"; // Change to your image path
     document.getElementById('banner').src = "./assets/banner.gif"; // Change to your image path
     document.getElementById('status-dot').className = `status-dot scale-75 status-online`;
     document.getElementById('app').classList.remove('opacity-0');
