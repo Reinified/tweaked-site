@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('global-name').innerText = "Barack Obama";
     document.getElementById('username').innerText = "@obamajuankinobi";
     document.getElementById('avatar').src = "./assets/profiles/obamajuankinobi.png"; // Change to your image path
-    document.getElementById('banner').src = "./assets/secret/banner.gif"; // Change to your image path
+    document.getElementById('banner').src = "./assets/banner.gif"; // Change to your image path
     document.getElementById('status-dot').className = `status-dot scale-75 status-online`;
     document.getElementById('app').classList.remove('opacity-0');
 });
@@ -14,7 +14,7 @@ fetchStatus();
 // --- load blocks ---
 document.querySelectorAll('[id^="load-"]').forEach(container => {
     const fileName = container.id.replace('load-', '');
-    fetch(`./blocks/secret/${fileName}.html`)
+    fetch(`./blocks/${fileName}.html`)
         .then(res => res.text())
         .then(html => {
             container.innerHTML = html;
@@ -53,23 +53,4 @@ function playSoundRestart(file) {
 
     window.currentSound = new Audio('./sounds/' + file);
     window.currentSound.play();
-}
-
-// --- obamna ---
-let obamaClickCount = 0;
-
-function playSoundRestart(file) {
-    if (window.currentSound) {
-        window.currentSound.pause();
-        window.currentSound.currentTime = 0;
-    }
-
-    window.currentSound = new Audio('./sounds/' + file);
-    window.currentSound.play();
-
-    obamaClickCount++;
-
-    if (obamaClickCount >= 10) {
-        window.location.href = "./secret/secret.html";
-    }
 }
