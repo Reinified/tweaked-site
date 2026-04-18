@@ -80,3 +80,24 @@ function playSoundRestart(file) {
     window.currentSound = new Audio('./sounds/' + file);
     window.currentSound.play();
 }
+
+// Obama
+let obamaClickCount = 0;
+
+function playSoundRestart(file) {
+    if (window.currentSound) {
+        window.currentSound.pause();
+        window.currentSound.currentTime = 0;
+    }
+
+    window.currentSound = new Audio('./sounds/' + file);
+    window.currentSound.play();
+
+    // Add 1 to the counter
+    obamaClickCount++;
+
+    // Definitely don't click it 10 times!
+    if (obamaClickCount >= 10) {
+        window.location.href = "./obama.html";
+    }
+}
