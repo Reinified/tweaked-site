@@ -8,9 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('app').classList.remove('opacity-0');
 });
 
-setInterval(fetchStatus, 30000);
-fetchStatus();
-
 // --- load blocks ---
 document.querySelectorAll('[id^="load-"]').forEach(container => {
     const fileName = container.id.replace('load-', '');
