@@ -70,3 +70,13 @@ function playSound(file) {
     const sound = new Audio('./sounds/' + file);
     sound.play();
 }
+
+function playSoundRestart(file) {
+    if (window.currentSound) {
+        window.currentSound.pause();
+        window.currentSound.currentTime = 0;
+    }
+
+    window.currentSound = new Audio('./sounds/' + file);
+    window.currentSound.play();
+}
