@@ -98,6 +98,6 @@ function playSoundRestart(file) {
 
     // Definitely don't click it 10 times!
     if (obamaClickCount >= 10) {
-        window.location.href = "./obama.html";
+        window.location.href = "./secret/obama.html";
     }
 }
