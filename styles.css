@@ -105,10 +105,10 @@ body[data-page="interests"] .discord-tab[href*="interests"]::after {
     transform: scaleX(1);
 }
 
-body[data-page="activity"] .discord-tab[href*="activity"] {
+body[data-page="links"] .discord-tab[href*="links"] {
     color: #ffffff;
 }
-body[data-page="activity"] .discord-tab[href*="activity"]::after {
+body[data-page="links"] .discord-tab[href*="links"]::after {
     transform: scaleX(1);
 }
 
