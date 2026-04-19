@@ -6,7 +6,7 @@ async function fetchStatus() {
     if (!nameEl) return; 
 
     try {
-        const res = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`);
+        const res = await fetch(`https://api.lanyard.sakurajima.cloud/v1/users/${USER_ID}`);
         const { data } = await res.json();
         
         // Update Basic Profile Info
