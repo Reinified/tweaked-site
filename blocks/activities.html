@@ -19,66 +19,78 @@
 </div>
 
 <script>
-    // Listen for data from scripts.js
     window.addEventListener('message', (event) => {
         if (event.data.type !== 'UPDATE_ACTIVITY') return;
-        const { current, discord_user, is_online } = event.data.payload;
+        const { activities, discord_status } = event.data.payload;
 
         const currentDisplay = document.getElementById('current-activity-display');
         const recentList = document.getElementById('recent-activity-list');
         if (!currentDisplay || !recentList) return;
 
-        // Filter out custom statuses to find actual activities (Games, Spotify)
-        const realActivities = current.filter(a => a.type !== 4);
-        const currentAct = realActivities[0];
-
-        if (currentAct && is_online) {
-            const actName = currentAct.name || 'Unknown Activity';
+        // Find the best activity to show (Prioritize Games, then Spotify, then Custom Status)
+        let currentAct = activities.find(a => a.type === 0); // Playing
+        if (!currentAct) currentAct = activities.find(a => a.type === 2); // Listening
+        if (!currentAct) currentAct = activities.find(a => a.type !== 4); // Anything else
+        
+        if (currentAct && discord_status !== 'offline') {
+            const actName = currentAct.name || 'Unknown';
             const actDetails = currentAct.details || '';
             const actState = currentAct.state || '';
-            const actType = currentAct.type === 2 ? 'Listening to' : currentAct.type === 3 ? 'Watching' : 'Playing';
             
-            // Get Image
+            // Set the verb (Playing, Listening, etc.)
+            let verb = 'Playing';
+            if (currentAct.type === 2) verb = 'Listening to';
+            if (currentAct.type === 3) verb = 'Watching';
+            
+            // Get Image (Handling Spotify's weird encrypted URLs safely)
             let imgHtml = '';
             if (currentAct.assets && currentAct.assets.large_image) {
                 let imgUrl = currentAct.assets.large_image;
-                if (imgUrl.startsWith('mp:external')) {
-                    imgUrl = `https://media.discordapp.net/${imgUrl.replace('mp:', '')}`;
+                
+                // Fix Spotify URLs
+                if (imgUrl.startsWith('spotify:')) {
+                    imgUrl = imgUrl.replace('spotify:', 'https://i.scdn.co/image/');
+                } 
+                // Fix Discord external media URLs
+                else if (imgUrl.startsWith('mp:external')) {
+                    imgUrl = `https://media.discordapp.net/${imgUrl.substring(3)}`;
                 }
-                imgHtml = `<img src="${imgUrl}" class="w-12 h-12 rounded object-cover flex-shrink-0 border border-white/10">`;
+                // Standard Discord CDN
+                else if (!imgUrl.startsWith('http')) {
+                    imgUrl = `https://cdn.discordapp.com/${imgUrl}`;
+                }
+
+                imgHtml = `<img src="${imgUrl}" class="w-12 h-12 rounded object-cover flex-shrink-0 border border-white/10" onerror="this.style.display='none'">`;
             }
 
             currentDisplay.innerHTML = `
                 ${imgHtml}
                 <div class="min-w-0">
+                    <p class="text-xs text-gray-500 truncate">${verb}</p>
                     <p class="text-xs text-white font-bold truncate">${actName}</p>
                     <p class="text-[10px] text-gray-400 truncate">${actDetails}</p>
                     ${actState ? `<p class="text-[10px] text-gray-500 truncate">${actState}</p>` : ''}
                 </div>
             `;
 
-            // Save to Recent History (Ignore Spotify if you don't want it to spam the list)
-            saveToHistory(actName, actDetails, actType, imgHtml);
+            // Save to history (Checking if it changed so we don't spam the same song)
+            const historyKey = actName + actDetails;
+            if (!window.lastActivityKey || window.lastActivityKey !== historyKey) {
+                window.lastActivityKey = historyKey;
+                saveToHistory(actName, actDetails, verb, imgHtml);
+            }
 
         } else {
             currentDisplay.innerHTML = `<p class="text-xs text-gray-500">Currently offline or doing nothing.</p>`;
         }
 
-        // Render Recent History
         renderHistory();
     });
 
     function saveToHistory(name, details, type, img) {
         let history = JSON.parse(localStorage.getItem('activity_history') || '[]');
-        
-        // Avoid exact duplicates at the top
-        if (history.length > 0 && history[0].name === name && history[0].details === details) return;
-
         history.unshift({ name, details, type, img, time: Date.now() });
-        
-        // Keep only last 5 items
         if (history.length > 5) history = history.slice(0, 5);
-        
         localStorage.setItem('activity_history', JSON.stringify(history));
     }
 
