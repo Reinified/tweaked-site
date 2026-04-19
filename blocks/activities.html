@@ -1,0 +1,122 @@
+<div class="bg-white/5 p-4 border border-white/10 space-y-4">
+    <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest">Activity</h2>
+
+    <!-- Current Activity-->>
+    <div>
+        <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">Current activity</p>
+        <div id="current-activity-display" class="bg-black/20 p-3 border border-white/5 flex items-center gap-3">
+            <p class="text-xs text-gray-500">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div>
+        <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">Recent activity</p>
+        <div id="recent-activity-list" class="flex flex-col gap-2">
+            <p class="text-[10px] text-gray-500 px-3">No recent activity.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Listen for data from scripts.js
+    window.addEventListener('message', (event) => {
+        if (event.data.type !== 'UPDATE_ACTIVITY') return;
+        const { current, discord_user, is_online } = event.data.payload;
+
+        const currentDisplay = document.getElementById('current-activity-display');
+        const recentList = document.getElementById('recent-activity-list');
+        if (!currentDisplay || !recentList) return;
+
+        // Filter out custom statuses to find actual activities (Games, Spotify)
+        const realActivities = current.filter(a => a.type !== 4);
+        const currentAct = realActivities[0];
+
+        if (currentAct && is_online) {
+            const actName = currentAct.name || 'Unknown Activity';
+            const actDetails = currentAct.details || '';
+            const actState = currentAct.state || '';
+            const actType = currentAct.type === 2 ? 'Listening to' : currentAct.type === 3 ? 'Watching' : 'Playing';
+            
+            // Get Image
+            let imgHtml = '';
+            if (currentAct.assets && currentAct.assets.large_image) {
+                let imgUrl = currentAct.assets.large_image;
+                if (imgUrl.startsWith('mp:external')) {
+                    imgUrl = `https://media.discordapp.net/${imgUrl.replace('mp:', '')}`;
+                }
+                imgHtml = `<img src="${imgUrl}" class="w-12 h-12 rounded object-cover flex-shrink-0 border border-white/10">`;
+            }
+
+            currentDisplay.innerHTML = `
+                ${imgHtml}
+                <div class="min-w-0">
+                    <p class="text-xs text-white font-bold truncate">${actName}</p>
+                    <p class="text-[10px] text-gray-400 truncate">${actDetails}</p>
+                    ${actState ? `<p class="text-[10px] text-gray-500 truncate">${actState}</p>` : ''}
+                </div>
+            `;
+
+            // Save to Recent History (Ignore Spotify if you don't want it to spam the list)
+            saveToHistory(actName, actDetails, actType, imgHtml);
+
+        } else {
+            currentDisplay.innerHTML = `<p class="text-xs text-gray-500">Currently offline or doing nothing.</p>`;
+        }
+
+        // Render Recent History
+        renderHistory();
+    });
+
+    function saveToHistory(name, details, type, img) {
+        let history = JSON.parse(localStorage.getItem('activity_history') || '[]');
+        
+        // Avoid exact duplicates at the top
+        if (history.length > 0 && history[0].name === name && history[0].details === details) return;
+
+        history.unshift({ name, details, type, img, time: Date.now() });
+        
+        // Keep only last 5 items
+        if (history.length > 5) history = history.slice(0, 5);
+        
+        localStorage.setItem('activity_history', JSON.stringify(history));
+    }
+
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('activity_history') || '[]');
+        const list = document.getElementById('recent-activity-list');
+        
+        if (history.length === 0) {
+            list.innerHTML = `<p class="text-[10px] text-gray-500 px-3">No recent activity.</p>`;
+            return;
+        }
+
+        list.innerHTML = history.map(item => {
+            const timeAgo = getTimeAgo(item.time);
+            return `
+                <div class="bg-black/20 p-3 border border-white/5 flex items-center gap-3">
+                    ${item.img}
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[10px] text-gray-500">${item.type}</p>
+                        <p class="text-xs text-white font-bold truncate">${item.name}</p>
+                        <p class="text-[10px] text-gray-400 truncate">${item.details}</p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p class="text-[9px] text-gray-500">${timeAgo}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function getTimeAgo(timestamp) {
+        const seconds = Math.floor((Date.now() - timestamp) / 1000);
+        if (seconds < 60) return 'Just now';
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return `${minutes}m ago`;
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours}h ago`;
+        const days = Math.floor(hours / 24);
+        return `${days}d ago`;
+    }
+</script>

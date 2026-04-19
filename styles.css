@@ -105,6 +105,13 @@ body[data-page="interests"] .discord-tab[href*="interests"]::after {
     transform: scaleX(1);
 }
 
+body[data-page="activity"] .discord-tab[href$="activity"] {
+    color: #ffffff;
+}
+body[data-page="activity"] .discord-tab[href$="activity"]::after {
+    transform: scaleX(1);
+}
+
 /* Tooltips */
 .game-tooltip {
     position: relative;

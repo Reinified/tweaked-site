@@ -4,21 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>soulz</title>
-    <meta name="title" content="soulz">
-    <meta name="description" content="20yo autistic guy who really, really, really loves cats.">
+    <title>soulz - activity</title>
     <meta name="theme-color" content="#ffad5b">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-site.vercel.app/">
-    <meta property="og:title" content="soulz">
-    <meta property="og:description" content="20yo autistic guy who really, really, really loves cats..">
-    <meta property="og:image" content="https://cdn.discordapp.com/avatars/587156686612201482/a_7dac1d4010494399d68ca8695933ff09.png?size=512">
-    <link id="favicon" rel="icon" type="image/x-icon" href="">
+    <link id="favicon" rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/avatars/587156686612201482/a_7dac1d4010494399d68ca8695933ff09.png?size=32">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./styles.css">
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4 md:p-8" data-page="board">
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8" data-page="activity">
     
     <div id="app" class="w-full max-w-4xl glass overflow-hidden">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
@@ -47,10 +40,10 @@
             </div>
         </div>
         
-        <div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[600px] overflow-y-auto">
             
             <!-- LEFT SIDE -->
-            <div class="space-y-5">
+            <div class="space-y-5 sticky-left">
                 <div>
                     <h1 id="global-name" class="text-xl font-bold text-white">soulz</h1>
                     <p id="username" class="text-[#ffad5b] text-xs italic opacity-70"></p>
@@ -63,6 +56,11 @@
                 <div class="bg-black/20 p-4 border border-white/5">
                     <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">About Me</h2>
                     <p class="text-xs leading-relaxed text-gray-300"> Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats. I’ve grown up with cats (and dogs), and cats are the best. I have a lot of pics of <a href="https://photos.google.com/share/AF1QipNMMGGcN46RUtQ2-Ron0lV4t5JL7lpWP7gIbTMN-fgILGXcRNyS0x2duTROPvdg8w?key=d01uNllWYXdDMlJlbUVjU2VmeFpkajBaQmVIbm5B" target="_blank" rel="noopener noreferrer" class="text-[#ffad5b] underline hover:opacity-80 transition-opacity">my cars</a>. </p>
+                </div>
+
+                <div class="bg-black/20 p-4 border border-white/5">
+                    <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quote</h2>
+                    <p class="text-xs leading-relaxed text-gray-300">"Don't lose your mind over people who dont mind losing you."</p>
                 </div>
 
                 <!-- Flat Sections -->
@@ -117,11 +115,11 @@
                 <div class="flex gap-6 border-b border-white/10 pb-1">
                     <a href="board.html" class="discord-tab">Board</a>
                     <a href="interests.html" class="discord-tab">Interests</a>
+                    <a href="activity.html" class="discord-tab">Activity</a>
                 </div>
 
                 <!-- Loaded Modules -->
-                <div id="load-friends"></div>
-                <div id="load-ad"></div>
+                <div id="load-activities"></div>
             </div>
         </div>
     </div>
