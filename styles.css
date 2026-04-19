@@ -91,10 +91,10 @@ body {
 }
 
 /* Active */
-body[data-page="board"] .discord-tab[href*="board"] {
+body[data-page="board"] .discord-tab[href*="index"] {
     color: #ffffff;
 }
-body[data-page="board"] .discord-tab[href*="board"]::after {
+body[data-page="board"] .discord-tab[href*="index"]::after {
     transform: scaleX(1);
 }
 
