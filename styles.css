@@ -91,24 +91,24 @@ body {
 }
 
 /* Active */
-body[data-page="board"] .discord-tab[href*="index"] {
+body[data-page="board"] .discord-tab[href$="index.html"] {
     color: #ffffff;
 }
-body[data-page="board"] .discord-tab[href*="index"]::after {
+body[data-page="board"] .discord-tab[href$="index.html"]::after {
     transform: scaleX(1);
 }
 
-body[data-page="interests"] .discord-tab[href*="interests"] {
+body[data-page="interests"] .discord-tab[href$="interests.html"] {
     color: #ffffff;
 }
-body[data-page="interests"] .discord-tab[href*="interests"]::after {
+body[data-page="interests"] .discord-tab[href$="interests.html"]::after {
     transform: scaleX(1);
 }
 
-body[data-page="links"] .discord-tab[href*="links"] {
+body[data-page="links"] .discord-tab[href$="links.html"] {
     color: #ffffff;
 }
-body[data-page="links"] .discord-tab[href*="links"]::after {
+body[data-page="links"] .discord-tab[href$="links.html"]::after {
     transform: scaleX(1);
 }
 
