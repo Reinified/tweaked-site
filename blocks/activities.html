@@ -1,0 +1,70 @@
+<div class="bg-white/5 p-4 border border-white/10">
+    <h2 class="text-[9px] font-bold text-[#ffad5b] uppercase tracking-widest mb-3">Now Playing</h2>
+    <div id="lastfm-container" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-black/20 border border-white/10 animate-pulse"></div>
+        <div>
+            <p class="text-[10px] text-gray-500">Connecting to Last.fm...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const LASTFM_KEY = "6310ac1a53c3a3d532ec428346aca45a";
+    const LASTFM_USER = "Soulz0387";
+
+    async function fetchLastFm() {
+        try {
+            const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USER}&api_key=${LASTFM_KEY}&format=json&limit=1`);
+            const data = await res.json();
+            
+            const track = data.recenttracks.track[0];
+            
+            if (track && track["@attr"] && !track["@attr"].nowplaying) {
+                document.getElementById('lastfm-container').innerHTML = `
+                    <div class="w-12 h-12 bg-black/20 border border-white/10 flex items-center justify-center text-gray-500 text-lg">⏸</div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-500">Last played</p>
+                        <p class="text-xs text-white font-bold truncate">${track.name}</p>
+                        <p class="text-[10px] text-gray-400 truncate">${track.artist["#text"]}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (track) {
+                // Get album art (replace large/ with the actual size)
+                let imgUrl = track.image[2]["#text"]; 
+                if (imgUrl.includes("/300x300/")) {
+                    imgUrl = imgUrl.replace("/300x300/", "/64s/");
+                }
+
+                document.getElementById('lastfm-container').innerHTML = `
+                    <img src="${imgUrl}" class="w-12 h-12 rounded object-cover border border-white/10 flex-shrink-0" onerror="this.style.display='none'">
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-500">Listening to</p>
+                        <p class="text-xs text-white font-bold truncate">${track.name}</p>
+                        <p class="text-[10px] text-gray-400 truncate">${track.artist["#text"]}</p>
+                    </div>
+                `;
+            } else {
+                document.getElementById('lastfm-container').innerHTML = `
+                    <div class="w-12 h-12 bg-black/20 border border-white/10 flex items-center justify-center text-gray-500 text-lg">⏸</div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-500">Nothing playing</p>
+                    </div>
+                `;
+            }
+        } catch (e) {
+            document.getElementById('lastfm-container').innerHTML = `
+                <div class="w-12 h-12 bg-black/20 border border-white/10 flex items-center justify-center text-gray-500 text-lg">⚠</div>
+                <div class="min-w-0">
+                    <p class="text-[10px] text-gray-500">Failed to load.</p>
+                </div>
+            `;
+        }
+    }
+
+    fetchLastFm();
+    // Refresh every 15 seconds
+    setInterval(fetchLastFm, 15000);
+</script>

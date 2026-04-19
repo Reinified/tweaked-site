@@ -105,6 +105,13 @@ body[data-page="interests"] .discord-tab[href$="interests.html"]::after {
     transform: scaleX(1);
 }
 
+body[data-page="music"] .discord-tab[href$="activity.html"] {
+    color: #ffffff;
+}
+body[data-page="music"] .discord-tab[href$="activity.html"]::after {
+    transform: scaleX(1);
+}
+
 body[data-page="links"] .discord-tab[href$="links.html"] {
     color: #ffffff;
 }
