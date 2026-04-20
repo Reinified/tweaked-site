@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    background-image: url("background.png");
+    background-color: #0a0a0a;
+    background-size: cover;
+    background-position: center;
+    color: #ddd;
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#global-name {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.glass {
+    background: rgba(15, 10, 5, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #7A2E1C;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+    display: flex;
+    width: fit-content;
+    animation: marquee 15s linear infinite;
+}
+
+.status-dot {
+    width: 32px;
+    height: 32px;
+    border: 4px solid #0a0a0a;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
+
+.status-online { background-color: #43b581; }
+.status-idle { background-color: #faa61a; }
+.status-dnd { background-color: #f04747; }
+.status-offline { background-color: #747f8d; }
+
+.discord-btn {
+    background: #1E90FF;
+    color: #111827;
+}
+
+/* Tabs */
+.discord-tab {
+    position: relative;
+    color: #b5bac1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.discord-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #eaa8e1;
+    border-radius: 2px 2px 0 0;
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+}
+
+.discord-tab:visited {
+    color: #b5bac1;
+}
+
+.discord-tab:hover {
+    color: #dbdee1;
+}
+
+.discord-tab:hover::after {
+    transform: scaleX(1);
+}
+
+/* Sticky left window */
+.sticky-left {
+    align-self: start;
+    position: 
+     top, 0;
+}
+
+/* Active Tabs */
+body[data-page="board"] .discord-tab[href$="index.html"] {
+    color: #ffffff;
+}
+body[data-page="board"] .discord-tab[href$="index.html"]::after {
+    transform: scaleX(1);
+}
+
+body[data-page="interests"] .discord-tab[href$="interests.html"] {
+    color: #ffffff;
+}
+body[data-page="interests"] .discord-tab[href$="interests.html"]::after {
+    transform: scaleX(1);
+}
+
+body[data-page="music"] .discord-tab[href$="activity.html"] {
+    color: #ffffff;
+}
+body[data-page="music"] .discord-tab[href$="activity.html"]::after {
+    transform: scaleX(1);
+}
+
+body[data-page="links"] .discord-tab[href$="links.html"] {
+    color: #ffffff;
+}
+body[data-page="links"] .discord-tab[href$="links.html"]::after {
+    transform: scaleX(1);
+}
+
+/* Tooltips */
+.music-tooltip {
+    position: relative;
+    overflow: visible !important; 
+}
+
+.music-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px); 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111214;
+    color: #dbdee1;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    z-index: 50;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.24);
+}
+
+.music-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #111214;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    z-index: 50;
+}
+
+.music-tooltip:hover::after,
+.music-tooltip:hover::before {
+    opacity: 1;
+}
+
+/* --- LAST.FM NOW PLAYING (Discord Style) --- */
+.nowplayingcard {
+    font-family: 'Space Grotesk', sans-serif;
+    width: 100%;
+}
+
+.nowplayingcontainer-inner {
+    width: 100%;
+    background: rgba(15, 1, 5, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #eaa8e1;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.nowplayingcontainer-inner:hover {
+    border-color: #ffffff;
+}
+
+img#trackart {
+    width: 56px;
+    height: 56px;
+    border-radius: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.trackInfo {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.trackInfo a {
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+.trackInfo a:nth-child(odd) {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.trackInfo a:nth-child(even) {
+    color: #b5bac1;
+    font-size: 12px;
+}
+
+.trackInfo img {
+    display: none;
+}
