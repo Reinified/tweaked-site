@@ -12,7 +12,7 @@ async function fetchStatus() {
         document.getElementById('global-name').innerText = data.discord_user.global_name || data.discord_user.username;
         document.getElementById('username').innerText = `@${data.discord_user.username}`;
         document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=256`;
-        document.getElementById('banner').src = `https://cdn.discordapp.com/banners/${USER_ID}/a_7dac1d4010494399d68ca8695933ff09?size=1024`;
+        document.getElementById('banner').src = `https://cdn.discordapp.com/banners/${USER_ID}/a_301562bacb3bdffe15204cf2e19b5ed0?size=1024`;
         document.getElementById('status-dot').className = `status-dot scale-75 status-${data.discord_status}`;
         
         const act = data.activities.find(a => a.type === 4);
