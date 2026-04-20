@@ -1,57 +1,44 @@
-/**
-  Developed by Prashant Shrestha
-  + https://prashant.me
-*/
 var lastfmData = {
-  baseURL:
-    "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
-  // Your Last.fm Username
+  baseURL: "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
   user: "Soulz0387",
-  // Your API key
   api_key: "6d7a76c0f2d28cf892c49b830a91a522",
   additional: "&format=json&limit=1"
 };
 
 var getSetLastFM = function() {
-  $.ajax({
-    type: "GET",
-    url:
-      lastfmData.baseURL +
-      lastfmData.user +
-      "&api_key=" +
-      lastfmData.api_key +
-      lastfmData.additional,
-    dataType: "json",
-    success: function(resp) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", lastfmData.baseURL + lastfmData.user + "&api_key=" + lastfmData.api_key + lastfmData.additional, true);
+  
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var resp = JSON.parse(xhr.responseText);
       var recentTrack = resp.recenttracks.track[0];
-      var formatted =
-        "<img src='https://i.imgur.com/EgWjJry.png'>" + recentTrack.name;
-      $("a#tracktitle")
-        .html(formatted)
-        .attr("href", recentTrack.url)
-        .attr("title", recentTrack.name + " by " + recentTrack.artist["#text"])
-        .attr("target", "_blank");
+      
+      if (recentTrack) {
+        var formatted = recentTrack.name;
+        document.getElementById("tracktitle").innerHTML = formatted;
+        document.getElementById("tracktitle").href = recentTrack.url;
+        document.getElementById("tracktitle").title = recentTrack.name + " by " + recentTrack.artist["#text"];
+        document.getElementById("tracktitle").target = "_blank";
 
-      var artistFormatted =
-        "<img src='https://i.imgur.com/fae5XZA.png'>" +
-        recentTrack.artist["#text"];
-      $("a#trackartist")
-        .html(artistFormatted)
-        .attr("title", "Artist : " + recentTrack.artist["#text"]);
-      $("img#trackart").attr("src", recentTrack.image[2]["#text"]);
-    },
-    error: function(resp) {
-      $("a#tracktitle").html(
-        "<img src='https://i.imgur.com/EgWjJry.png'>" + "Silence!"
-      );
-      $("img#trackart").attr("src", "https://i.imgur.com/Q6cCswP.jpg");
-      var artistFormatted =
-        "<img src='https://i.imgur.com/fae5XZA.png'>Prashant Shrestha";
-      $("a#trackartist")
-        .html(artistFormatted)
-        .attr("href", "www.prashant.me/");
+        document.getElementById("trackartist").innerHTML = recentTrack.artist["#text"];
+        document.getElementById("trackartist").title = "Artist : " + recentTrack.artist["#text"];
+        document.getElementById("trackart").src = recentTrack.image[2]["#text"];
+      } else {
+        document.getElementById("tracktitle").innerHTML = "Silence!";
+        document.getElementById("trackart").src = "https://i.imgur.com/Q6cCswP.jpg";
+        document.getElementById("trackartist").innerHTML = "Nothing playing";
+      }
     }
-  });
+  };
+  
+  xhr.onerror = function() {
+    document.getElementById("tracktitle").innerHTML = "Silence!";
+    document.getElementById("trackart").src = "https://i.imgur.com/Q6cCswP.jpg";
+    document.getElementById("trackartist").innerHTML = "Failed to load";
+  };
+  
+  xhr.send();
 };
 
 // Get the new one.
