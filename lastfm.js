@@ -26,26 +26,48 @@ var getSetLastFM = function() {
       }
 
       document.getElementById("tracktitle").innerHTML = currentTrack.name;
+      
+      // --- TOOLTIP & LINKS ---
+      var albumName = "Unknown Album";
+      var trackUrl = "#";
+      var artistUrl = "#";
+
+      // Try to get Spotify URL (Priority)
+      if(currentTrack.url && currentTrack.url.includes("open.spotify.com")) {
+          trackUrl = currentTrack.url;
+          artistUrl = currentTrack.url.split("/track/")[0] + "/artist/" + encodeURIComponent(currentTrack.artist["#text"]);
+          albumName = currentTrack.album["#text"] || "View on Spotify";
+      } 
+      // Fallback to Last.fm URL
+      else {
+          trackUrl = "https://www.last.fm/user/" + lastfmData.user + "/library/tracks/" + encodeURIComponent(currentTrack.mbid);
+          artistUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]);
+          albumName = currentTrack.album["#text"] || "View on Last.fm";
+      }
+
       document.getElementById("tracktitle").title = currentTrack.name + " by " + currentTrack.artist["#text"];
+      document.getElementById("tracktitle").href = trackUrl;
       document.getElementById("trackartist").innerHTML = currentTrack.artist["#text"];
-      document.getElementById("tracktitle").href = currentTrack.url || "#";
+      document.getElementById("trackartist").title = "Artist: " + currentTrack.artist["#text"];
+      document.getElementById("trackartist").href = artistUrl;
       document.getElementById("trackart").src = currentImg;
+      
+      // Set Tooltips
+      document.getElementById("trackart-link").setAttribute("data-tooltip", albumName);
+      document.getElementById("tracktitle").setAttribute("data-tooltip", currentTrack.name + " by " + currentTrack.artist["#text"]);
+      document.getElementById("trackartist").setAttribute("data-tooltip", "Artist: " + currentTrack.artist["#text"]);
       
       var artContainer = document.querySelector('.nowplayingcontainer-inner');
       if(artContainer) {
           artContainer.style.opacity = isPlaying ? '1' : '0.7';
       }
 
-      // 2. UPDATE RECENT HISTORY LIST (Skip the first track to avoid duplicates)
+      // 2. UPDATE RECENT HISTORY LIST
       var list = document.getElementById("lastfm-history");
       var historyHtml = '';
 
       for (var i = 1; i < tracks.length; i++) {
         var item = tracks[i];
-        
-        // Parse the timestamp safely (Last.fm sometimes sends it as a string)
-        var uts = (item.date && item.date.uts) ? parseInt(item.date.uts) : Date.now();
-        var timeAgo = getTimeAgo(uts);
 
         var historyImg = item.image[2]["#text"];
         if (historyImg.includes("/300x300/")) {
@@ -57,9 +79,6 @@ var getSetLastFM = function() {
         historyHtml += '<div class="min-w-0 flex-1">';
         historyHtml += '<p class="text-xs text-white font-bold truncate">' + item.name + '</p>';
         historyHtml += '<p class="text-[10px] text-gray-400 truncate">' + item.artist["#text"] + '</p>';
-        historyHtml += '</div>';
-        historyHtml += '<div class="text-right flex-shrink-0">';
-        historyHtml += '<p class="text-[9px] text-gray-500">' + timeAgo + '</p>';
         historyHtml += '</div>';
         historyHtml += '</div>';
       }
@@ -76,25 +95,6 @@ var getSetLastFM = function() {
   
   xhr.send();
 };
-
-// Convert UNIX timestamp to "X min ago"
-function getTimeAgo(timestamp) {
-    var seconds = Math.floor((Date.now() - timestamp) / 1000);
-    
-    // SANITY CHECK: If Last.fm sends a backwards timestamp older than 365 days, ignore it.
-    if (seconds < -31536000) {
-        return "Recently";
-    }
-
-    if (seconds < 0) return "Recently"; // Just in case it's slightly negative but not 50 years ago
-    if (seconds < 60) return 'Just now';
-    var minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return minutes + 'm ago';
-    var hours = Math.floor(minutes / 60);
-    if (hours < 24) return hours + 'h ago';
-    var days = Math.floor(hours / 24);
-    return days + 'd ago';
-}
 
 // Get the new one.
 getSetLastFM();
