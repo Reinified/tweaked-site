@@ -42,7 +42,7 @@ var getSetLastFM = function() {
       
       // Album art tooltip & link
       document.getElementById("trackart-link").href = trackUrl;
-      document.getElementById("trackart-link").setAttribute("data-tooltip", currentTrack.album && currentAlbum["#text"] ? currentTrack.album["#text"] : "View on Last.fm");
+      document.getElementById("trackart-link").setAttribute("data-tooltip", currentTrack.album && currentTrack.album["#text"] ? currentTrack.album["#text"] : "View on Last.fm");
       
       var artContainer = document.querySelector('.nowplayingcontainer-inner');
       if(artContainer) {
