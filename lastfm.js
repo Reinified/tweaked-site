@@ -1,7 +1,10 @@
+/**
+  Rewritten for modern JS (No jQuery required)
+*/
 var lastfmData = {
   baseURL: "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
   user: "Soulz0387",
-  api_key: "6d7a76c0f2d28cf892c49b830a91a522",
+  api_key: "6310ac1a53c3a3d532ec428346aca45a",
   additional: "&format=json&limit=5"
 };
 
@@ -18,58 +21,50 @@ var getSetLastFM = function() {
       
       // 1. UPDATE NOW PLAYING (Top Card)
       var currentTrack = tracks[0];
-      var isPlaying = currentTrack["@attr"] && currentTrack["@attr"].nowplaying;
+      var isPlaying = currentTrack["@attr"] && currentTrack["@"].nowplaying;
       
+      // Simple image grab - no weird replacing that might break URLs
       var currentImg = currentTrack.image[2]["#text"];
-      if (currentImg.includes("/300x300/")) {
-          currentImg = currentImg.replace("/300x300/", "/64s/");
-      }
-
       document.getElementById("tracktitle").innerHTML = currentTrack.name;
-      
-      // --- LAST.FM URLS (Ignored Spotify completely) ---
-      // Standard track URL: /user/username/_/trackname
-      var trackUrl = "https://www.last.fm/user/" + lastfmData.user + "/_/" + encodeURIComponent(currentTrack.artist["#text"]) + "/" + encodeURIComponent(currentTrack.name);
-      var artistUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]);
-
-      // Apply to HTML
       document.getElementById("tracktitle").title = currentTrack.name + " by " + currentTrack.artist["#text"];
+      
+      // CORRECT LAST.FM TRACK URL: /music/Artist+Name/Track+Name
+      var trackUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]) + "/" + encodeURIComponent(currentTrack.name);
       document.getElementById("tracktitle").href = trackUrl;
       document.getElementById("tracktitle").setAttribute("data-tooltip", currentTrack.name + " by " + currentTrack.artist["#text"]);
       
+      var artistUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]);
       document.getElementById("trackartist").innerHTML = currentTrack.artist["#text"];
       document.getElementById("trackartist").href = artistUrl;
       
       // Album art tooltip & link
+      var albumName = (currentTrack.album && currentTrack.album["#text"]) ? currentTrack.album["#text"] : "View on Last.fm";
       document.getElementById("trackart-link").href = trackUrl;
-      document.getElementById("trackart-link").setAttribute("data-tooltip", currentTrack.album && currentTrack.album["#text"] ? currentTrack.album["#text"] : "View on Last.fm");
+      document.getElementById("trackart-link").setAttribute("data-tooltip", albumName);
+      document.getElementById("trackart").src = currentImg; // Put this back to exactly how it was when it worked!
       
       var artContainer = document.querySelector('.nowplayingcontainer-inner');
       if(artContainer) {
           artContainer.style.opacity = isPlaying ? '1' : '0.7';
       }
 
-      // 2. UPDATE RECENT HISTORY LIST 
+      // 2. UPDATE RECENT HISTORY LIST (Original Layout Restored)
       var list = document.getElementById("lastfm-history");
       var historyHtml = '';
 
       for (var i = 1; i < tracks.length; i++) {
         var item = tracks[i];
         
-        // Correct Last.fm URL structure: /music/ArtistName/_/TrackName
-        var historyTrackUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]) + "/_/" + encodeURIComponent(item.name);
-        var historyArtistUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]);
+        // CORRECT LAST.FM TRACK URL
+        var historyTrackUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]) + "/" + encodeURIComponent(item.name);
 
         var historyImg = item.image[2]["#text"];
-        if (historyImg.includes("/300x300/")) {
-            historyImg = historyImg.replace("/300x300/", "/64s/");
-        }
 
         historyHtml += '<a href="' + historyTrackUrl + '" target="_blank" class="flex items-center gap-3 hover:opacity-80 transition-opacity">';
-        historyHtml += '<img src="' + historyImg + '" class="w-10 h-10 rounded object-cover border border-white/10 flex-shrink-0">';
+        historyHtml += '<img src="' + historyImg + '" class="w-12 h-12 rounded object-cover border border-white/10 flex-shrink-0">';
         historyHtml += '<div class="min-w-0 flex-1">';
-        historyHtml += '<p class="text-xs text-white font-bold truncate">' + item.name + '</p>';
-        historyHtml += '<p class="text-[10px] text-gray-400 truncate">' + item.artist["#text"] + '</p>';
+        historyHtml += '<p class="text-xs text-white font-bold truncate" style="font-size: 14px; font-weight: bold; line-height: 15px; letter-spacing: 0.2px; padding: 8px 0 0 4px;">' + item.name + '</p>';
+        historyHtml += '<p class="text-gray-400 truncate" style="font-size: 12px; padding: 4px 0 0 4px;">' + item.artist["#text"] + '</p>';
         historyHtml += '</div>';
         historyHtml += '</a>';
       }
@@ -87,7 +82,7 @@ var getSetLastFM = function() {
   xhr.send();
 };
 
-// Get the new one.
-getSetLastFM();
 // Start the countdown.
+getSetLastFM();
+// Refresh every 10 seconds
 setInterval(getSetLastFM, 10 * 1000);
