@@ -1,6 +1,3 @@
-/**
-  Rewritten for modern JS (No jQuery required)
-*/
 var lastfmData = {
   baseURL: "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
   user: "Soulz0387",
