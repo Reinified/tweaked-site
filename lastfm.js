@@ -80,6 +80,13 @@ var getSetLastFM = function() {
 // Convert UNIX timestamp to "X min ago"
 function getTimeAgo(timestamp) {
     var seconds = Math.floor((Date.now() - timestamp) / 1000);
+    
+    // SANITY CHECK: If Last.fm sends a backwards timestamp older than 365 days, ignore it.
+    if (seconds < -31536000) {
+        return "Recently";
+    }
+
+    if (seconds < 0) return "Recently"; // Just in case it's slightly negative but not 50 years ago
     if (seconds < 60) return 'Just now';
     var minutes = Math.floor(seconds / 60);
     if (minutes < 60) return minutes + 'm ago';
