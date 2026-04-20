@@ -99,3 +99,4 @@ function playSoundRestart(file) {
         window.location.href = "./secret/obama.html";
     }
 }
+
