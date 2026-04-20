@@ -1,11 +1,8 @@
-/**
-  Rewritten to pull Recent Tracks directly from Last.fm API
-*/
 var lastfmData = {
   baseURL: "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
   user: "Soulz0387",
   api_key: "6d7a76c0f2d28cf892c49b830a91a522",
-  additional: "&format=json&limit=5" // Changed to 5 to get recent history
+  additional: "&format=json&limit=5"
 };
 
 var getSetLastFM = function() {
@@ -17,41 +14,39 @@ var getSetLastFM = function() {
       var resp = JSON.parse(xhr.responseText);
       var tracks = resp.recenttracks.track;
       
+      if (!tracks || tracks.length === 0) return;
+      
       // 1. UPDATE NOW PLAYING (Top Card)
       var currentTrack = tracks[0];
-      if (currentTrack) {
-        var isPlaying = currentTrack["@attr"] && currentTrack["@attr"].nowplaying;
-        
-        // Fix image URL
-        var currentImg = currentTrack.image[2]["#text"];
-        if (currentImg.includes("/300x300/")) {
-            currentImg = currentImg.replace("/300x300/", "/64s/");
-        }
-
-        document.getElementById("tracktitle").innerHTML = currentTrack.name;
-        document.getElementById("tracktitle").title = currentTrack.name + " by " + currentTrack.artist["#text"];
-        document.getElementById("trackartist").innerHTML = currentTrack.artist["#text"];
-        document.getElementById("tracktitle").href = currentTrack.url || "#";
-        document.getElementById("trackart").src = currentImg;
-        
-        // Dim if not playing
-        var artContainer = document.querySelector('.nowplayingcontainer-inner');
-        if(artContainer) {
-            artContainer.style.opacity = isPlaying ? '1' : '0.7';
-        }
+      var isPlaying = currentTrack["@attr"] && currentTrack["@attr"].nowplaying;
+      
+      var currentImg = currentTrack.image[2]["#text"];
+      if (currentImg.includes("/300x300/")) {
+          currentImg = currentImg.replace("/300x300/", "/64s/");
       }
 
-      // 2. UPDATE RECENT HISTORY LIST
+      document.getElementById("tracktitle").innerHTML = currentTrack.name;
+      document.getElementById("tracktitle").title = currentTrack.name + " by " + currentTrack.artist["#text"];
+      document.getElementById("trackartist").innerHTML = currentTrack.artist["#text"];
+      document.getElementById("tracktitle").href = currentTrack.url || "#";
+      document.getElementById("trackart").src = currentImg;
+      
+      var artContainer = document.querySelector('.nowplayingcontainer-inner');
+      if(artContainer) {
+          artContainer.style.opacity = isPlaying ? '1' : '0.7';
+      }
+
+      // 2. UPDATE RECENT HISTORY LIST (Skip the first track to avoid duplicates)
       var list = document.getElementById("lastfm-history");
       var historyHtml = '';
 
-      for (var i = 0; i < tracks.length; i++) {
+      for (var i = 1; i < tracks.length; i++) {
         var item = tracks[i];
         
-        // Last.fm gives us a "date.uts" timestamp (UNIX epoch). We convert it to "X min ago".
-        var timeAgo = (item.date && item.date.uts) ? getTimeAgo(item.date.uts) : "Just now";
-        
-        // Fix history image URLs
+        // Parse the timestamp safely (Last.fm sometimes sends it as a string)
+        var uts = (item.date && item.date.uts) ? parseInt(item.date.uts) : Date.now();
+        var timeAgo = getTimeAgo(uts);
+
         var historyImg = item.image[2]["#text"];
         if (historyImg.includes("/300x300/")) {
             historyImg = historyImg.replace("/300x300/", "/64s/");
