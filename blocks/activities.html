@@ -10,36 +10,40 @@
 
 <script>
     const LASTFM_KEY = "6d7a76c0f2d28cf892c49b830a91a522";
-    const LASTFM_USER = "Soulz0387";
+    const LASTFM_USER = "Soulz0387"; 
 
     async function fetchLastFm() {
         try {
             const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USER}&api_key=${LASTFM_KEY}&format=json&limit=1`);
             const data = await res.json();
-            
             const track = data.recenttracks.track[0];
             
-            if (track && track["@attr"] && !track["@attr"].nowplaying) {
-                document.getElementById('lastfm-container').innerHTML = `
+            const container = document.getElementById('lastfm-container');
+
+            if (!track) {
+                container.innerHTML = `
                     <div class="w-12 h-12 bg-black/20 border border-white/10 flex items-center justify-center text-gray-500 text-lg">⏸</div>
                     <div class="min-w-0">
-                        <p class="text-[10px] text-gray-500">Last played</p>
-                        <p class="text-xs text-white font-bold truncate">${track.name}</p>
-                        <p class="text-[10px] text-gray-400 truncate">${track.artist["#text"]}</p>
+                        <p class="text-[10px] text-gray-500">Nothing playing</p>
                     </div>
                 `;
                 return;
             }
 
-            if (track) {
-                // Get album art (replace large/ with the actual size)
-                let imgUrl = track.image[2]["#text"]; 
-                if (imgUrl.includes("/300x300/")) {
-                    imgUrl = imgUrl.replace("/300x300/", "/64s/");
-                }
+            const isPlaying = track["@attr"] && track["@attr"].nowplaying;
+            
+            // FIX: Properly format the image URL so Vercel doesn't block it
+            let imgUrl = track.image[2]["#text"];
+            if (imgUrl.includes("/300x300/")) {
+                imgUrl = imgUrl.replace("/300x300/", "/64s/");
+            }
 
-                document.getElementById('lastfm-container').innerHTML = `
-                    <img src="${imgUrl}" class="w-12 h-12 rounded object-cover border border-white/10 flex-shrink-0" onerror="this.style.display='none'">
+            // Fallback in case Last.fm gives a broken image
+            const fallbackImg = "https://lastfm.freetls.net/i/u/64s/2a96cbd8b46e442225d951319f53e9a1.png";
+
+            if (isPlaying) {
+                container.innerHTML = `
+                    <img src="${imgUrl}" class="w-12 h-12 rounded object-cover border border-white/10 flex-shrink-0" onerror="this.src='${fallbackImg}'">
                     <div class="min-w-0">
                         <p class="text-[10px] text-gray-500">Listening to</p>
                         <p class="text-xs text-white font-bold truncate">${track.name}</p>
@@ -47,10 +51,12 @@
                     </div>
                 `;
             } else {
-                document.getElementById('lastfm-container').innerHTML = `
-                    <div class="w-12 h-12 bg-black/20 border border-white/10 flex items-center justify-center text-gray-500 text-lg">⏸</div>
+                container.innerHTML = `
+                    <img src="${imgUrl}" class="w-12 h-12 rounded object-cover border border-white/10 flex-shrink-0 opacity-70" onerror="this.src='${fallbackImg}'">
                     <div class="min-w-0">
-                        <p class="text-[10px] text-gray-500">Nothing playing</p>
+                        <p class="text-[10px] text-gray-500">Last played</p>
+                        <p class="text-xs text-white font-bold truncate">${track.name}</p>
+                        <p class="text-[10px] text-gray-400 truncate">${track.artist["#text"]}</p>
                     </div>
                 `;
             }
@@ -65,6 +71,5 @@
     }
 
     fetchLastFm();
-    // Refresh every 15 seconds
-    setInterval(fetchLastFm, 15000);
+    setInterval(fetchLastFm, 10000); // Refreshes every 10 seconds
 </script>
