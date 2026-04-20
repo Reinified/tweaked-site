@@ -27,20 +27,10 @@ var getSetLastFM = function() {
 
       document.getElementById("tracktitle").innerHTML = currentTrack.name;
       
-      // --- LINKS & TOOLTIPS ---
-      var trackUrl = "#";
-      var artistUrl = "#";
-
-      // SPOTIFY ALWAYS TAKES PRIORITY
-      if(currentTrack.url && currentTrack.url.includes("open.spotify.com")) {
-          trackUrl = currentTrack.url;
-          artistUrl = currentTrack.url.split("/track/")[0] + "/artist/" + encodeURIComponent(currentTrack.artist["#text"]);
-      } 
-      // FALLBACK TO LAST.FM
-      else {
-          trackUrl = "https://www.last.fm/user/" + lastfmData.user + "/library/tracks/" + encodeURIComponent(currentTrack.mbid);
-          artistUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]);
-      }
+      // --- LAST.FM URLS (Ignored Spotify completely) ---
+      // Standard track URL: /user/username/_/trackname
+      var trackUrl = "https://www.last.fm/user/" + lastfmData.user + "/_/" + encodeURIComponent(currentTrack.artist["#text"]) + "/" + encodeURIComponent(currentTrack.name);
+      var artistUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]);
 
       // Apply to HTML
       document.getElementById("tracktitle").title = currentTrack.name + " by " + currentTrack.artist["#text"];
@@ -50,46 +40,36 @@ var getSetLastFM = function() {
       document.getElementById("trackartist").innerHTML = currentTrack.artist["#text"];
       document.getElementById("trackartist").href = artistUrl;
       
-      // Album art tooltip & link (Just blindly opens the track URL, no specific album page)
+      // Album art tooltip & link
       document.getElementById("trackart-link").href = trackUrl;
-      document.getElementById("trackart-link").setAttribute("data-tooltip", currentTrack.album && currentTrack.album["#text"] ? currentTrack.album["#text"] : "View Track");
+      document.getElementById("trackart-link").setAttribute("data-tooltip", currentTrack.album && currentAlbum["#text"] ? currentTrack.album["#text"] : "View on Last.fm");
       
       var artContainer = document.querySelector('.nowplayingcontainer-inner');
       if(artContainer) {
           artContainer.style.opacity = isPlaying ? '1' : '0.7';
       }
 
-      // 2. UPDATE RECENT HISTORY LIST (No tooltips, Spotify priority links)
+      // 2. UPDATE RECENT HISTORY LIST 
       var list = document.getElementById("lastfm-history");
       var historyHtml = '';
 
       for (var i = 1; i < tracks.length; i++) {
         var item = tracks[i];
         
-        // Generate Spotify links for history items too
-        var historyTrackUrl = "#";
-        var historyArtistUrl = "#";
-        
-        if(item.url && item.url.includes("open.spotify.com")) {
-            historyTrackUrl = item.url;
-            historyArtistUrl = item.url.split("/track/")[0] + "/artist/" + encodeURIComponent(item.artist["#text"]);
-        } else {
-            historyTrackUrl = "https://www.last.fm/user/" + lastfmData.user + "/library/tracks/" + encodeURIComponent(item.mbid);
-            historyArtistUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]);
-        }
+        // Correct Last.fm URL structure: /music/ArtistName/_/TrackName
+        var historyTrackUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]) + "/_/" + encodeURIComponent(item.name);
+        var historyArtistUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]);
 
         var historyImg = item.image[2]["#text"];
         if (historyImg.includes("/300x300/")) {
             historyImg = historyImg.replace("/300x300/", "/64s/");
         }
 
-        historyHtml += '<div class="bg-black/20 p-3 border border-white/5 flex items-center gap-3">';
         historyHtml += '<a href="' + historyTrackUrl + '" target="_blank" class="flex items-center gap-3 hover:opacity-80 transition-opacity">';
         historyHtml += '<img src="' + historyImg + '" class="w-10 h-10 rounded object-cover border border-white/10 flex-shrink-0">';
         historyHtml += '<div class="min-w-0 flex-1">';
         historyHtml += '<p class="text-xs text-white font-bold truncate">' + item.name + '</p>';
         historyHtml += '<p class="text-[10px] text-gray-400 truncate">' + item.artist["#text"] + '</p>';
-        historyHtml += '</div>';
         historyHtml += '</div>';
         historyHtml += '</a>';
       }

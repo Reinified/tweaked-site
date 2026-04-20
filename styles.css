@@ -90,6 +90,13 @@ body {
     transform: scaleX(1);
 }
 
+/* Sticky left window */
+.sticky-left {
+    align-self: start;
+    position: sticky;
+    top: 0;
+}
+
 /* Active */
 body[data-page="board"] .discord-tab[href$="index.html"] {
     color: #ffffff;
@@ -165,7 +172,7 @@ body[data-page="links"] .discord-tab[href$="links.html"]::after {
 }
 
 
-/* Last.fm Tooltips */
+/* Last.fm  */
 .music-tooltip {
     position: relative;
     overflow: visible !important;
@@ -210,14 +217,30 @@ body[data-page="links"] .discord-tab[href$="links.html"]::after {
     opacity: 1;
 }
 
-/* Stop left side scrolling */
-.sticky-left {
-    align-self: start;
-    position: sticky;
-    top: 0;
+.trackInfo a {
+    position: relative;
+    display: block;
+    transition: color 0.15s ease;
 }
 
-/* --- LAST.FM NOW PLAYING (Discord Style) --- */
+.trackInfo a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #eaa8e1;
+    transition: width 0.2s ease;
+}
+
+.trackInfo a:hover {
+    color: #ffffff !important;
+}
+
+.trackInfo a:hover::after {
+    width: 100%;
+}
 
 .nowplayingcard {
     font-family: 'Space Grotesk', sans-serif;
