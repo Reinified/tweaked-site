@@ -1,7 +1,7 @@
 var lastfmData = {
   baseURL: "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
   user: "Soulz0387",
-  api_key: "6310ac1a53c3a3d532ec428346aca45a",
+  api_key: "6d7a76c0f2d28cf892c49b830a91a522",
   additional: "&format=json&limit=5"
 };
 
@@ -18,52 +18,46 @@ var getSetLastFM = function() {
       
       // 1. UPDATE NOW PLAYING (Top Card)
       var currentTrack = tracks[0];
-      var isPlaying = currentTrack["@attr"] && currentTrack["@"].nowplaying;
+      var isPlaying = currentTrack["@attr"] && currentTrack["@attr"].nowplaying;
       
-      // Simple image grab - no weird replacing that might break URLs
       var currentImg = currentTrack.image[2]["#text"];
+      if (currentImg.includes("/300x300/")) {
+          currentImg = currentImg.replace("/300x300/", "/64s/");
+      }
+
       document.getElementById("tracktitle").innerHTML = currentTrack.name;
       document.getElementById("tracktitle").title = currentTrack.name + " by " + currentTrack.artist["#text"];
-      
-      // CORRECT LAST.FM TRACK URL: /music/Artist+Name/Track+Name
-      var trackUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]) + "/" + encodeURIComponent(currentTrack.name);
-      document.getElementById("tracktitle").href = trackUrl;
-      document.getElementById("tracktitle").setAttribute("data-tooltip", currentTrack.name + " by " + currentTrack.artist["#text"]);
-      
-      var artistUrl = "https://www.last.fm/music/" + encodeURIComponent(currentTrack.artist["#text"]);
       document.getElementById("trackartist").innerHTML = currentTrack.artist["#text"];
-      document.getElementById("trackartist").href = artistUrl;
-      
-      // Album art tooltip & link
-      var albumName = (currentTrack.album && currentTrack.album["#text"]) ? currentTrack.album["#text"] : "View on Last.fm";
-      document.getElementById("trackart-link").href = trackUrl;
-      document.getElementById("trackart-link").setAttribute("data-tooltip", albumName);
-      document.getElementById("trackart").src = currentImg; // Put this back to exactly how it was when it worked!
+      document.getElementById("tracktitle").href = currentTrack.url || "#";
+      document.getElementById("trackart").src = currentImg;
       
       var artContainer = document.querySelector('.nowplayingcontainer-inner');
       if(artContainer) {
           artContainer.style.opacity = isPlaying ? '1' : '0.7';
       }
 
-      // 2. UPDATE RECENT HISTORY LIST (Original Layout Restored)
+      // 2. UPDATE RECENT HISTORY LIST (Skip the first track to avoid duplicates)
       var list = document.getElementById("lastfm-history");
       var historyHtml = '';
 
       for (var i = 1; i < tracks.length; i++) {
         var item = tracks[i];
         
-        // CORRECT LAST.FM TRACK URL
-        var historyTrackUrl = "https://www.last.fm/music/" + encodeURIComponent(item.artist["#text"]) + "/" + encodeURIComponent(item.name);
-
         var historyImg = item.image[2]["#text"];
+        if (historyImg.includes("/300x300/")) {
+            historyImg = historyImg.replace("/300x300/", "/64s/");
+        }
 
-        historyHtml += '<a href="' + historyTrackUrl + '" target="_blank" class="flex items-center gap-3 hover:opacity-80 transition-opacity">';
-        historyHtml += '<img src="' + historyImg + '" class="w-12 h-12 rounded object-cover border border-white/10 flex-shrink-0">';
+        historyHtml += '<div class="bg-black/20 p-3 border border-white/5 flex items-center gap-3">';
+        historyHtml += '<img src="' + historyImg + '" class="w-10 h-10 rounded object-cover border border-white/10 flex-shrink-0">';
         historyHtml += '<div class="min-w-0 flex-1">';
-        historyHtml += '<p class="text-xs text-white font-bold truncate" style="font-size: 14px; font-weight: bold; line-height: 15px; letter-spacing: 0.2px; padding: 8px 0 0 4px;">' + item.name + '</p>';
-        historyHtml += '<p class="text-gray-400 truncate" style="font-size: 12px; padding: 4px 0 0 4px;">' + item.artist["#text"] + '</p>';
+        historyHtml += '<p class="text-xs text-white font-bold truncate">' + item.name + '</p>';
+        historyHtml += '<p class="text-[10px] text-gray-400 truncate">' + item.artist["#text"] + '</p>';
         historyHtml += '</div>';
-        historyHtml += '</a>';
+        historyHtml += '<div class="text-right flex-shrink-0">';
+        historyHtml += '<p class="text-[9px] text-gray-500">' + timeAgo + '</p>';
+        historyHtml += '</div>';
+        historyHtml += '</div>';
       }
       
       if(list) list.innerHTML = historyHtml;
@@ -79,7 +73,19 @@ var getSetLastFM = function() {
   xhr.send();
 };
 
-// Start the countdown.
+// Convert UNIX timestamp to "X min ago"
+function getTimeAgo(timestamp) {
+    var seconds = Math.floor((Date.now() - timestamp) / 1000);
+    if (seconds < 60) return 'Just now';
+    var minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + 'm ago';
+    var hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + 'h ago';
+    var days = Math.floor(hours / 24);
+    return days + 'd ago';
+}
+
+// Get the new one.
 getSetLastFM();
-// Refresh every 10 seconds
+// Start the countdown.
 setInterval(getSetLastFM, 10 * 1000);
