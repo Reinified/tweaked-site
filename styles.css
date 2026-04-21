@@ -238,4 +238,4 @@ img#trackart {
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 1px; }
 ::-webkit-scrollbar-track { background: #0A0A0A; }
-::-webkit-scrollbar-thumb { background: #FF8C42; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #FF8C42; border-radius: 1px; }
