@@ -2,7 +2,7 @@ var lastfmData = {
   baseURL: "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=",
   user: "Soulz0387",
   api_key: "6d7a76c0f2d28cf892c49b830a91a522",
-  additional: "&format=json&limit=5"
+  additional: "&format=json&limit=6"
 };
 
 var getSetLastFM = function() {
