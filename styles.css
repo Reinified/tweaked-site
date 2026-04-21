@@ -234,3 +234,9 @@ img#trackart {
 .trackInfo img {
     display: none;
 }
+
+/* Scrollbar - cssportal.com */
+* {
+  scrollbar-width: 3px;
+  scrollbar-color: #f59e0b #fffbeb;
+}
