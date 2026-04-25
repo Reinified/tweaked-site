@@ -401,3 +401,16 @@ img#trackart {
     padding: 30px 0;
     font-family: 'Space Grotesk', sans-serif;
 }
+
+/* Reduce lag from glass blur effect */
+.glass {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimize marquee animation */
+.animate-marquee {
+    will-change: transform;
+    transform: translateZ(0);
+}
