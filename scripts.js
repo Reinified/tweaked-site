@@ -1,9 +1,20 @@
 const USER_ID = "587156686612201482";
 
-// --- DISCORD LANYARD STATUS ---
+// --- DEBOUNCE FUNCTION to prevent multiple rapid calls ---
+function debounce(func, delay) {
+    let timeout;
+    return function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, arguments), delay);
+    };
+}
+
+// --- LAZY STATUS FETCH (only when page is visible) ---
+let statusInterval = null;
+
 async function fetchStatus() {
-    // Safety check: only run if the Lanyard elements are on the page
-    if (!document.getElementById('global-name')) return; 
+    if (!document.getElementById('global-name')) return;
+    if (document.hidden) return; // Don't fetch if tab is hidden
     
     try {
         const res = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`);
@@ -11,48 +22,104 @@ async function fetchStatus() {
         
         document.getElementById('global-name').innerText = data.discord_user.global_name || data.discord_user.username;
         document.getElementById('username').innerText = `@${data.discord_user.username}`;
-        document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=256`;
-        document.getElementById('banner').src = `https://cdn.discordapp.com/banners/${USER_ID}/a_301562bacb3bdffe15204cf2e19b5ed0?size=1024`;
+        
+        // Lazy load avatar with requestIdleCallback
+        const avatarImg = document.getElementById('avatar');
+        if (avatarImg && data.discord_user.avatar) {
+            requestIdleCallback(() => {
+                avatarImg.src = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=256`;
+            });
+        }
+        
+        // Lazy load banner
+        const bannerImg = document.getElementById('banner');
+        if (bannerImg) {
+            requestIdleCallback(() => {
+                bannerImg.src = `https://cdn.discordapp.com/banners/${USER_ID}/a_301562bacb3bdffe15204cf2e19b5ed0?size=1024`;
+            });
+        }
+        
         document.getElementById('status-dot').className = `status-dot scale-75 status-${data.discord_status}`;
         
         const act = data.activities.find(a => a.type === 4);
         const avatarUrl = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=32`;
-        document.getElementById('favicon').href = avatarUrl;
+        
+        const favicon = document.getElementById('favicon');
+        if (favicon) favicon.href = avatarUrl;
         
         if(act) {
             document.getElementById('status-text').innerText = act.state || data.discord_status;
             if(act.emoji) {
                 const emoji = document.getElementById('status-emoji');
-                emoji.src = act.emoji.id ? `https://cdn.discordapp.com/emojis/${act.emoji.id}.webp` : `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${act.emoji.name.codePointAt(0).toString(16)}.png`;
-                emoji.classList.remove('hidden');
+                const emojiUrl = act.emoji.id ? `https://cdn.discordapp.com/emojis/${act.emoji.id}.webp` : `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${act.emoji.name.codePointAt(0).toString(16)}.png`;
+                requestIdleCallback(() => {
+                    emoji.src = emojiUrl;
+                    emoji.classList.remove('hidden');
+                });
             }
         }
-        document.getElementById('app').classList.remove('opacity-0');
+        document.getElementById('app')?.classList.remove('opacity-0');
     } catch (e) { 
         console.error("Lanyard fetch error:", e); 
     }
 }
 
-// Update status every 30 seconds
-setInterval(fetchStatus, 30000);
-fetchStatus();
+// Start/stop status based on page visibility
+function startStatusUpdates() {
+    if (statusInterval) clearInterval(statusInterval);
+    fetchStatus(); // fetch immediately
+    statusInterval = setInterval(() => {
+        if (!document.hidden) fetchStatus();
+    }, 60000); // 60 seconds instead of 30
+}
 
-// Blocks
-document.querySelectorAll('[id^="load-"]').forEach(container => {
-    const fileName = container.id.replace('load-', '');
-    fetch(`./blocks/${fileName}.html`)
-        .then(res => res.text())
-        .then(html => {
-            container.innerHTML = html;
-        })
-        .catch(err => console.error(`Failed to load module: ${fileName}`, err));
+function stopStatusUpdates() {
+    if (statusInterval) {
+        clearInterval(statusInterval);
+        statusInterval = null;
+    }
+}
+
+// Visibility API - stop fetching when tab is hidden
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopStatusUpdates();
+    } else {
+        startStatusUpdates();
+    }
 });
 
-// Toasts
+// Start status updates
+startStatusUpdates();
+
+// --- LAZY LOAD BLOCKS (with requestIdleCallback) ---
+function loadBlocks() {
+    const containers = document.querySelectorAll('[id^="load-"]');
+    containers.forEach(container => {
+        const fileName = container.id.replace('load-', '');
+        requestIdleCallback(() => {
+            fetch(`./blocks/${fileName}.html`)
+                .then(res => res.text())
+                .then(html => {
+                    container.innerHTML = html;
+                })
+                .catch(err => console.error(`Failed to load module: ${fileName}`, err));
+        });
+    });
+}
+
+// Load blocks after page is fully loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadBlocks);
+} else {
+    loadBlocks();
+}
+
+// --- TOASTS ---
 let toastTimeout;
 function showToast(message) {
     const toast = document.getElementById('toast');
-    if (!toast) return; // Stop if toast doesn't exist on page
+    if (!toast) return;
     
     toast.innerText = message;
     clearTimeout(toastTimeout);
@@ -65,33 +132,29 @@ function showToast(message) {
     }, 2000);
 }
 
-// SFX
+// --- SFX (with caching) ---
+const soundCache = {};
+
 function playSound(file) {
-    const sound = new Audio('./sounds/' + file);
-    sound.play();
-}
-
-function playSoundRestart(file) {
-    if (window.currentSound) {
-        window.currentSound.pause();
-        window.currentSound.currentTime = 0;
+    if (!soundCache[file]) {
+        soundCache[file] = new Audio('./sounds/' + file);
     }
-
-    window.currentSound = new Audio('./sounds/' + file);
-    window.currentSound.play();
+    const sound = soundCache[file];
+    sound.currentTime = 0;
+    sound.play().catch(e => console.log('Sound play failed:', e));
 }
 
-// Obama
 let obamaClickCount = 0;
+let currentSound = null;
 
 function playSoundRestart(file) {
-    if (window.currentSound) {
-        window.currentSound.pause();
-        window.currentSound.currentTime = 0;
+    if (currentSound) {
+        currentSound.pause();
+        currentSound.currentTime = 0;
     }
 
-    window.currentSound = new Audio('./sounds/' + file);
-    window.currentSound.play();
+    currentSound = new Audio('./sounds/' + file);
+    currentSound.play().catch(e => console.log('Sound play failed:', e));
 
     obamaClickCount++;
 
@@ -100,7 +163,7 @@ function playSoundRestart(file) {
     }
 }
 
-// User Reviews
+// --- OPTIMIZED USER REVIEWS MODAL (No lag, lazy loaded) ---
 (function setupReviews() {
     const reviewsData = [
         { name: "kohrad", rating: 5, text: "soulz is literally the cat king. awesome guy, funny as hell." },
