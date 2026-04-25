@@ -163,84 +163,88 @@ function playSoundRestart(file) {
     }
 }
 
-// --- OPTIMIZED USER REVIEWS MODAL (No lag, lazy loaded) ---
-(function setupReviews() {
-    const reviewsData = [
-        { name: "kohrad", rating: 5, text: "soulz is literally the cat king. awesome guy, funny as hell." },
-        { name: "twixxty", rating: 5, text: "genuinely one of the nicest people i've met online. also his cat pics are 10/10." },
-        { name: "lamp", rating: 4, text: "pretty cool dude, makes the server feel like home." },
-        { name: "coco", rating: 5, text: "autistic king we love you soulz !!! 🐱" },
-        { name: "obama", rating: 5, text: "very based and cat-pilled. would recommend." }
-    ];
-
-    // Create modal lazily (only when first needed)
+// New User Reviews
+(function setupSnapshotModal() {
     let modal = null;
     let modalCreated = false;
+    let isLoading = false;
 
     function createModal() {
         if (modalCreated) return;
         
         modal = document.createElement('div');
-        modal.className = 'reviews-modal';
-        modal.id = 'reviewsModal';
+        modal.className = 'snapshot-modal';
+        modal.id = 'snapshotModal';
         modal.innerHTML = `
-            <div class="modal-card">
-                <div class="modal-header">
-                    <h3>⭐ user reviews</h3>
-                    <button class="modal-close-btn" id="closeModalBtn">✕</button>
+            <div class="snapshot-window">
+                <div class="snapshot-window-header">
+                    <h3>📋 USER REVIEWS</h3>
+                    <button class="snapshot-close" id="snapshotCloseBtn">✕</button>
                 </div>
-                <div class="reviews-list" id="reviewsList"></div>
+                <div class="snapshot-content" id="snapshotContent">
+                    <div style="text-align: center; padding: 40px; color: #888;">loading reviews...</div>
+                </div>
             </div>
         `;
         document.body.appendChild(modal);
         
-        document.getElementById('closeModalBtn').addEventListener('click', closeReviewsModal);
+        // Close button
+        document.getElementById('snapshotCloseBtn').addEventListener('click', closeModal);
+        
+        // Click outside to close
         modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeReviewsModal();
+            if (e.target === modal) closeModal();
         });
         
         modalCreated = true;
     }
 
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
-    function renderReviews() {
-        const reviewsListEl = document.getElementById('reviewsList');
-        if (!reviewsListEl) return;
-        if (reviewsData.length === 0) {
-            reviewsListEl.innerHTML = '<div class="no-reviews">✨ no reviews yet — be the first!</div>';
-            return;
+    async function loadReviewsContent() {
+        if (isLoading) return;
+        isLoading = true;
+        
+        const contentDiv = document.getElementById('snapshotContent');
+        if (!contentDiv) return;
+        
+        try {
+            const response = await fetch('./blocks/user-reviews-content.html');
+            const html = await response.text();
+            contentDiv.innerHTML = html;
+        } catch (error) {
+            console.error('Failed to load reviews:', error);
+            contentDiv.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #ffad5b;">
+                    ⚠️ couldn't load reviews<br>
+                    <small style="color:#666;">try again later</small>
+                </div>
+            `;
+        } finally {
+            isLoading = false;
         }
-        reviewsListEl.innerHTML = reviewsData.map(review => `
-            <div class="review-card">
-                <span class="reviewer-name">${escapeHtml(review.name)}</span>
-                <div class="star-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
-                <p class="review-text">${escapeHtml(review.text)}</p>
-            </div>
-        `).join('');
     }
 
-    function openReviewsModal() {
-        createModal(); // Create modal only when clicked
+    function openModal() {
+        createModal();
+        
+        // Play sound if available
         if (typeof playSound === 'function') {
             try { playSound('click.mp3'); } catch(e) {}
         }
-        renderReviews();
-        if (modal) modal.classList.add('active');
+        
+        // Load content if not already loaded
+        if (modal) {
+            modal.classList.add('active');
+            loadReviewsContent();
+        }
     }
 
-    function closeReviewsModal() {
-        if (modal) modal.classList.remove('active');
+    function closeModal() {
+        if (modal) {
+            modal.classList.remove('active');
+        }
     }
 
-    // Find button with simple interval (stops after found)
+    // Find button and bind
     let buttonFound = false;
     let checkInterval = null;
     
@@ -248,7 +252,7 @@ function playSoundRestart(file) {
         if (buttonFound) return true;
         const btn = document.getElementById('user-reviews-btn');
         if (btn) {
-            btn.addEventListener('click', openReviewsModal);
+            btn.addEventListener('click', openModal);
             buttonFound = true;
             if (checkInterval) clearInterval(checkInterval);
             return true;
@@ -256,7 +260,6 @@ function playSoundRestart(file) {
         return false;
     }
     
-    // Try immediately
     if (!findAndBindButton()) {
         checkInterval = setInterval(() => {
             if (findAndBindButton()) {
