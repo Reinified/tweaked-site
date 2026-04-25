@@ -110,6 +110,7 @@ function playSoundRestart(file) {
         { name: "obama", rating: 5, text: "very based and cat-pilled. would recommend." }
     ];
 
+    // Create modal (only once)
     const modal = document.createElement('div');
     modal.className = 'reviews-modal';
     modal.id = 'reviewsModal';
@@ -161,24 +162,39 @@ function playSoundRestart(file) {
         modal.classList.remove('active');
     }
 
-    function bindButton() {
-        const btn = document.getElementById('user-reviews-btn');
-        if (btn) {
-            btn.removeEventListener('click', openReviewsModal);
-            btn.addEventListener('click', openReviewsModal);
-        }
-    }
-
-    const observer = new MutationObserver(function(mutations) {
-        if (document.getElementById('user-reviews-btn')) {
-            bindButton();
-            observer.disconnect();
-        }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    document.addEventListener('click', function(e) {
-        if (e.target.id === 'closeModalBtn') closeReviewsModal();
+    // Close button handler
+    document.getElementById('closeModalBtn').addEventListener('click', closeReviewsModal);
+    modal.addEventListener('click', function(e) {
         if (e.target === modal) closeReviewsModal();
     });
+
+    // SIMPLE: Check for button every 500ms instead of MutationObserver
+    // This is MUCH less laggy
+    let buttonFound = false;
+    
+    function findAndBindButton() {
+        if (buttonFound) return;
+        const btn = document.getElementById('user-reviews-btn');
+        if (btn) {
+            btn.addEventListener('click', openReviewsModal);
+            buttonFound = true;
+            return true;
+        }
+        return false;
+    }
+    
+    // Try immediately
+    if (!findAndBindButton()) {
+        // Check every 500ms until found (blocks load quickly, this stops after found)
+        const interval = setInterval(function() {
+            if (findAndBindButton()) {
+                clearInterval(interval);
+            }
+        }, 500);
+        
+        // Safety: stop checking after 10 seconds
+        setTimeout(function() {
+            clearInterval(interval);
+        }, 10000);
+    }
 })();
