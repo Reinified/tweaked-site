@@ -234,3 +234,170 @@ img#trackart {
 .trackInfo img {
     display: none;
 }
+
+/* User Reviews */
+
+/* Full-width button styling */
+.bottom-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 140, 66, 0.5);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.bottom-action-btn:hover {
+    background: rgba(255, 140, 66, 0.15);
+    border-color: #ffad5b;
+    transform: translateY(-1px);
+}
+
+.btn-arrow {
+    opacity: 0.6;
+    transition: transform 0.15s ease;
+}
+
+.bottom-action-btn:hover .btn-arrow {
+    transform: translateX(4px);
+    opacity: 1;
+}
+
+/* Modal background overlay */
+.reviews-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.reviews-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal card */
+.reviews-modal .modal-card {
+    background: rgba(20, 18, 22, 0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid #ff8c42;
+    width: 90%;
+    max-width: 480px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* Modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 140, 66, 0.3);
+}
+
+.modal-header h3 {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ffad5b;
+    text-transform: uppercase;
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 8px;
+    transition: 0.1s ease;
+    font-family: monospace;
+}
+
+.modal-close-btn:hover {
+    color: #ffad5b;
+}
+
+/* Reviews scrollable list */
+.reviews-list {
+    padding: 16px 20px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 60vh;
+}
+
+/* Custom scrollbar */
+.reviews-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.reviews-list::-webkit-scrollbar-track {
+    background: #1e1a1a;
+}
+
+.reviews-list::-webkit-scrollbar-thumb {
+    background: #ffad5b;
+    border-radius: 20px;
+}
+
+/* Individual review card */
+.review-card {
+    background: rgba(10, 10, 12, 0.7);
+    margin-bottom: 14px;
+    padding: 12px;
+    border-left: 3px solid #ffad5b;
+    transition: 0.1s linear;
+}
+
+.review-card:hover {
+    background: rgba(20, 18, 20, 0.8);
+    border-left-color: #ffc285;
+}
+
+.reviewer-name {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffc285;
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.star-rating {
+    color: #ffad5b;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.review-text {
+    font-size: 11px;
+    color: #ccc;
+    line-height: 1.4;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.no-reviews {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    padding: 30px 0;
+    font-family: 'Space Grotesk', sans-serif;
+}

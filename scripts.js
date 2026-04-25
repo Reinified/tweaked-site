@@ -100,3 +100,85 @@ function playSoundRestart(file) {
     }
 }
 
+// User Reviews
+(function setupReviews() {
+    const reviewsData = [
+        { name: "kohrad", rating: 5, text: "soulz is literally the cat king. awesome guy, funny as hell." },
+        { name: "twixxty", rating: 5, text: "genuinely one of the nicest people i've met online. also his cat pics are 10/10." },
+        { name: "lamp", rating: 4, text: "pretty cool dude, makes the server feel like home." },
+        { name: "coco", rating: 5, text: "autistic king we love you soulz !!! 🐱" },
+        { name: "obama", rating: 5, text: "very based and cat-pilled. would recommend." }
+    ];
+
+    const modal = document.createElement('div');
+    modal.className = 'reviews-modal';
+    modal.id = 'reviewsModal';
+    modal.innerHTML = `
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>⭐ user reviews</h3>
+                <button class="modal-close-btn" id="closeModalBtn">✕</button>
+            </div>
+            <div class="reviews-list" id="reviewsList"></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function renderReviews() {
+        const reviewsListEl = document.getElementById('reviewsList');
+        if (!reviewsListEl) return;
+        if (reviewsData.length === 0) {
+            reviewsListEl.innerHTML = '<div class="no-reviews">✨ no reviews yet — be the first!</div>';
+            return;
+        }
+        reviewsListEl.innerHTML = reviewsData.map(review => `
+            <div class="review-card">
+                <span class="reviewer-name">${escapeHtml(review.name)}</span>
+                <div class="star-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                <p class="review-text">${escapeHtml(review.text)}</p>
+            </div>
+        `).join('');
+    }
+
+    function openReviewsModal() {
+        if (typeof playSound === 'function') {
+            try { playSound('click.mp3'); } catch(e) {}
+        }
+        renderReviews();
+        modal.classList.add('active');
+    }
+
+    function closeReviewsModal() {
+        modal.classList.remove('active');
+    }
+
+    function bindButton() {
+        const btn = document.getElementById('user-reviews-btn');
+        if (btn) {
+            btn.removeEventListener('click', openReviewsModal);
+            btn.addEventListener('click', openReviewsModal);
+        }
+    }
+
+    const observer = new MutationObserver(function(mutations) {
+        if (document.getElementById('user-reviews-btn')) {
+            bindButton();
+            observer.disconnect();
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'closeModalBtn') closeReviewsModal();
+        if (e.target === modal) closeReviewsModal();
+    });
+})();
