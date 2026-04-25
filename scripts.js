@@ -207,7 +207,7 @@ function playSoundRestart(file) {
         if (!contentDiv) return;
         
         try {
-            const response = await fetch('./blocks/user-reviews-content.html');
+            const response = await fetch('./blocks/userreviews-content.html');
             const html = await response.text();
             contentDiv.innerHTML = html;
         } catch (error) {
