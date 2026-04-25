@@ -21,6 +21,10 @@ body {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #7A2E1C;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: paint;
 }
 
 @keyframes marquee {
@@ -32,6 +36,8 @@ body {
     display: flex;
     width: fit-content;
     animation: marquee 15s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .status-dot {
@@ -51,6 +57,13 @@ body {
 .discord-btn {
     background: #1E90FF;
     color: #111827;
+}
+
+/* Reduce repaints on hover effects */
+.discord-tab,
+.bottom-action-btn,
+.review-card {
+    will-change: transform;
 }
 
 /* Tabs */

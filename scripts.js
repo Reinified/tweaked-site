@@ -110,20 +110,34 @@ function playSoundRestart(file) {
         { name: "obama", rating: 5, text: "very based and cat-pilled. would recommend." }
     ];
 
-    // Create modal (only once)
-    const modal = document.createElement('div');
-    modal.className = 'reviews-modal';
-    modal.id = 'reviewsModal';
-    modal.innerHTML = `
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3>⭐ user reviews</h3>
-                <button class="modal-close-btn" id="closeModalBtn">✕</button>
+    // Create modal lazily (only when first needed)
+    let modal = null;
+    let modalCreated = false;
+
+    function createModal() {
+        if (modalCreated) return;
+        
+        modal = document.createElement('div');
+        modal.className = 'reviews-modal';
+        modal.id = 'reviewsModal';
+        modal.innerHTML = `
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3>⭐ user reviews</h3>
+                    <button class="modal-close-btn" id="closeModalBtn">✕</button>
+                </div>
+                <div class="reviews-list" id="reviewsList"></div>
             </div>
-            <div class="reviews-list" id="reviewsList"></div>
-        </div>
-    `;
-    document.body.appendChild(modal);
+        `;
+        document.body.appendChild(modal);
+        
+        document.getElementById('closeModalBtn').addEventListener('click', closeReviewsModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeReviewsModal();
+        });
+        
+        modalCreated = true;
+    }
 
     function escapeHtml(str) {
         return str.replace(/[&<>]/g, function(m) {
@@ -151,33 +165,29 @@ function playSoundRestart(file) {
     }
 
     function openReviewsModal() {
+        createModal(); // Create modal only when clicked
         if (typeof playSound === 'function') {
             try { playSound('click.mp3'); } catch(e) {}
         }
         renderReviews();
-        modal.classList.add('active');
+        if (modal) modal.classList.add('active');
     }
 
     function closeReviewsModal() {
-        modal.classList.remove('active');
+        if (modal) modal.classList.remove('active');
     }
 
-    // Close button handler
-    document.getElementById('closeModalBtn').addEventListener('click', closeReviewsModal);
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeReviewsModal();
-    });
-
-    // SIMPLE: Check for button every 500ms instead of MutationObserver
-    // This is MUCH less laggy
+    // Find button with simple interval (stops after found)
     let buttonFound = false;
+    let checkInterval = null;
     
     function findAndBindButton() {
-        if (buttonFound) return;
+        if (buttonFound) return true;
         const btn = document.getElementById('user-reviews-btn');
         if (btn) {
             btn.addEventListener('click', openReviewsModal);
             buttonFound = true;
+            if (checkInterval) clearInterval(checkInterval);
             return true;
         }
         return false;
@@ -185,16 +195,18 @@ function playSoundRestart(file) {
     
     // Try immediately
     if (!findAndBindButton()) {
-        // Check every 500ms until found (blocks load quickly, this stops after found)
-        const interval = setInterval(function() {
+        checkInterval = setInterval(() => {
             if (findAndBindButton()) {
-                clearInterval(interval);
+                clearInterval(checkInterval);
+                checkInterval = null;
             }
         }, 500);
         
-        // Safety: stop checking after 10 seconds
-        setTimeout(function() {
-            clearInterval(interval);
+        setTimeout(() => {
+            if (checkInterval) {
+                clearInterval(checkInterval);
+                checkInterval = null;
+            }
         }, 10000);
     }
 })();
