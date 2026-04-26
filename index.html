@@ -50,18 +50,20 @@
         <div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6 h-[615px]">
             
             <!-- LEFT SIDE -->
-            <div class="space-y-3 overflow-hidden">
+            <div class="space-y-3 overflow-y-auto pr-2">
+                <!-- Name + Action Buttons row -->
                 <div>
-                    <h1 id="global-name" class="text-xl font-bold text-white">soulz</h1>
-                     <div class="flex gap-2" id="action-buttons">
-                    <button id="cats-btn" class="action-icon-btn" data-tooltip="Cats">
-                    <img src="./assets/icons/cats.png" alt="cats" class="w-4 h-4" loading="lazy">
-                </button>
-                    <button id="reviews-btn" class="action-icon-btn" data-tooltip="User Reviews">
-                    <img src="./assets/icons/reviews.png" alt="reviews" class="w-4 h-4" loading="lazy">
-                </button>
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <h1 id="global-name" class="text-xl font-bold text-white">soulz</h1>
+                        <div class="flex gap-2">
+                            <button id="cats-btn" class="action-icon-btn" data-tooltip="Cats">
+                                <img src="./assets/icons/cats.png" alt="cats" class="w-4 h-4" loading="lazy">
+                            </button>
+                            <button id="reviews-btn" class="action-icon-btn" data-tooltip="User Reviews">
+                                <img src="./assets/icons/reviews.png" alt="reviews" class="w-4 h-4" loading="lazy">
+                            </button>
+                        </div>
                     </div>
-                </div>
                     <p id="username" class="text-[#ffad5b] text-xs italic opacity-70"></p>
                     <div class="mt-3 flex items-center gap-2 bg-white/5 p-3 border border-white/10">
                         <img id="status-emoji" src="" class="w-4 h-4 hidden">
@@ -69,10 +71,13 @@
                     </div>
                 </div>
 
+                <!-- About Me -->
                 <div class="bg-black/20 p-4 border border-white/5">
                     <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">About Me</h2>
-                    <p class="text-xs leading-relaxed text-gray-300">Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats.</p> 
+                    <p class="text-xs leading-relaxed text-gray-300">Hi, im soulz. I'm a 20 year old autistic idiot who exists on the internet. There’s not much to know about me, except that I really really really love cats. I’ve grown up with cats (and dogs), and cats are the best.</p>
+                </div>
 
+                <!-- Quote -->
                 <div class="bg-black/20 p-4 border border-white/5">
                     <h2 class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quote</h2>
                     <p class="text-xs leading-relaxed text-gray-300">"Don't lose your mind over people who dont mind losing you."</p>
@@ -132,6 +137,7 @@
                     <a href="interests.html" class="discord-tab">Interests</a>
                     <a href="activity.html" class="discord-tab">Activity</a>
                     <a href="links.html" class="discord-tab">Links</a>
+                    <a href="reviews.html" class="discord-tab">Reviews</a>
                 </div>
 
                 <!-- Loaded Modules -->
