@@ -5,15 +5,7 @@ function loadReviews() {
     
     // List of review modules to load (add more as you go)
     const reviewModules = [
-        'lol.ctf',
-        'sakiro_shine64',
-        'itsmestizaid',
-        'jakynOl',
-        'nyctocervus',
-        'samara_cynders',
-        'thethethenlkothethethenlko',
-        'bloodyfall',
-        'fal1109'
+        'smearmo',
     ];
     
     // Clear loading text
