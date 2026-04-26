@@ -4,7 +4,7 @@ function loadReviews() {
     if (!reviewsList) return;
     
     const reviewModules = [
-        'smearmo'
+        'smearmo',
     ];
     
     reviewsList.innerHTML = '';
@@ -28,7 +28,7 @@ function loadReviews() {
                 observer.unobserve(placeholder);
             }
         });
-    }, { rootMargin: '100px' }); // Load 100px before they appear
+    }, { rootMargin: '100px' });
     
     // Create placeholders for each review
     reviewModules.forEach(username => {
@@ -45,4 +45,11 @@ function loadReviews() {
         reviewsList.appendChild(placeholder);
         observer.observe(placeholder);
     });
+}
+
+// Start loading reviews when page is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadReviews);
+} else {
+    loadReviews();
 }
