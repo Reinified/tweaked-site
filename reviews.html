@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>soulz — user reviews</title>
+    <meta name="title" content="soulz">
+    <meta name="description" content="20yo autistic guy who really, really, really loves cats.">
+    <meta name="theme-color" content="#ffad5b">
+    <link id="favicon" rel="icon" type="image/x-icon" href="">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/reviews.css">
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8" data-page="reviews">
+    
+    <div class="w-full max-w-2xl reviews-container">
+        <!-- Header with back button -->
+        <div class="flex items-center justify-between p-4 border-b border-white/10">
+            <a href="index.html" class="text-[#ffad5b] text-xs uppercase tracking-wider hover:opacity-80 transition-opacity flex items-center gap-2">
+                <span>←</span> BACK TO BOARD
+            </a>
+            <h1 class="text-sm font-bold text-white uppercase tracking-wider">⭐ User Reviews</h1>
+            <div class="w-16"></div>
+        </div>
+        
+        <!-- Warning Banner -->
+        <div class="mx-4 mt-4 p-3 bg-red-500/10 border-l-3 border-red-500">
+            <p class="text-[10px] text-red-400 uppercase tracking-wider font-bold">⚠️ WARNING — SYSTEM</p>
+            <p class="text-[10px] text-gray-400 mt-1">Spamming and writing offensive reviews will result with a ban. Please be respectful to other users.</p>
+        </div>
+        
+        <!-- Reviews List (loaded lazily via modules) -->
+        <div class="p-4 space-y-3" id="reviews-list">
+            <!-- Individual review modules will load here -->
+            <div id="load-smearmo"></div>
+            <div class="text-center text-gray-500 text-xs py-8">Loading reviews...</div>
+        </div>
+    </div>
+    
+    <script src="./scripts/scripts.js"></script>
+    <script src="./scripts/reviews.js"></script>
+</body>
+
+</html>
