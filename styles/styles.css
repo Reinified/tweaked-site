@@ -336,3 +336,20 @@ img#trackart {
     width: 16px;
     height: 16px;
 }
+
+/* Performance optimizations */
+.glass {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.animate-marquee {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.review-item,
+.discord-tab,
+.action-icon-btn {
+    will-change: transform;
+}

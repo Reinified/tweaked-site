@@ -33,9 +33,35 @@ async function fetchStatus() {
     }
 }
 
-// Update status every 30 seconds
-setInterval(fetchStatus, 30000);
+// Only fetch when tab is visible, every 60 seconds
+let statusInterval;
+
+function startStatusPolling() {
+    if (statusInterval) clearInterval(statusInterval);
+    statusInterval = setInterval(() => {
+        if (!document.hidden) fetchStatus();
+    }, 60000);
+}
+
+function stopStatusPolling() {
+    if (statusInterval) {
+        clearInterval(statusInterval);
+        statusInterval = null;
+    }
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopStatusPolling();
+    } else {
+        fetchStatus(); // fetch immediately when returning
+        startStatusPolling();
+    }
+});
+
+// Start polling
 fetchStatus();
+startStatusPolling();
 
 // Blocks
 document.querySelectorAll('[id^="load-"]').forEach(container => {

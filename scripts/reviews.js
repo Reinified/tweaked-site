@@ -3,45 +3,46 @@ function loadReviews() {
     const reviewsList = document.getElementById('reviews-list');
     if (!reviewsList) return;
     
-    // List of review modules to load (add more as you go)
     const reviewModules = [
-        'smearmo',
+        'smearmo'
     ];
     
-    // Clear loading text
     reviewsList.innerHTML = '';
     
-    // Load each review module lazily
-    reviewModules.forEach((username, index) => {
-        // Use requestIdleCallback to load reviews when browser is free
-        const loadModule = () => {
-            fetch(`./blocks/reviews/${username}.html`)
-                .then(res => {
-                    if (!res.ok) throw new Error('Review not found');
-                    return res.text();
-                })
-                .then(html => {
-                    const reviewDiv = document.createElement('div');
-                    reviewDiv.innerHTML = html;
-                    reviewsList.appendChild(reviewDiv.firstElementChild);
-                })
-                .catch(err => {
-                    console.error(`Failed to load review: ${username}`, err);
-                    // Optionally show a fallback
-                });
-        };
-        
-        if (window.requestIdleCallback) {
-            requestIdleCallback(loadModule, { timeout: 2000 });
-        } else {
-            setTimeout(loadModule, index * 50); // stagger loading
-        }
+    // Use Intersection Observer to load only visible reviews
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const placeholder = entry.target;
+                const username = placeholder.dataset.username;
+                
+                fetch(`./blocks/reviews/${username}.html`)
+                    .then(res => res.text())
+                    .then(html => {
+                        const reviewDiv = document.createElement('div');
+                        reviewDiv.innerHTML = html;
+                        placeholder.replaceWith(reviewDiv.firstElementChild);
+                    })
+                    .catch(err => console.error(`Failed: ${username}`, err));
+                
+                observer.unobserve(placeholder);
+            }
+        });
+    }, { rootMargin: '100px' }); // Load 100px before they appear
+    
+    // Create placeholders for each review
+    reviewModules.forEach(username => {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'review-skeleton p-3 flex gap-3';
+        placeholder.dataset.username = username;
+        placeholder.innerHTML = `
+            <div class="w-10 h-10 bg-white/5"></div>
+            <div class="flex-1">
+                <div class="h-3 bg-white/5 w-24 mb-2"></div>
+                <div class="h-2 bg-white/5 w-full"></div>
+            </div>
+        `;
+        reviewsList.appendChild(placeholder);
+        observer.observe(placeholder);
     });
-}
-
-// Start loading reviews when page is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadReviews);
-} else {
-    loadReviews();
 }
