@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
-    background-image: url("./assets/background.png");
+    background-image: url("../assets/background.png");
     background-color: #0a0a0a;
     background-size: cover;
     background-position: center;
@@ -297,4 +297,42 @@ img#trackart {
 .action-icon-btn:hover::before,
 .action-icon-btn:hover::after {
     opacity: 1;
+}
+
+/* Fix horizontal scrollbar on left side */
+.left-side-content {
+    overflow-x: hidden;
+}
+
+/* Make name and buttons stay on same line without overflow */
+.name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 8px;
+}
+
+.name-row h1 {
+    flex-shrink: 1;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.action-buttons-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* Adjust button size to be more compact */
+.action-icon-btn {
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+.action-icon-btn img {
+    width: 16px;
+    height: 16px;
 }
