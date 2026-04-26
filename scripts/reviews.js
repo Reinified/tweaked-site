@@ -5,6 +5,8 @@ function loadReviews() {
     
     const reviewModules = [
         'smearmo',
+        'tedmac',
+        'gustojose',
     ];
     
     reviewsList.innerHTML = '';
