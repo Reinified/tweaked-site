@@ -126,9 +126,9 @@ function playSoundRestart(file) {
     }
 }
 
-// ========== ACTION BUTTONS (Cats & Reviews) ==========
+// Action Buttons
 function setupActionButtons() {
-    // Cats button - redirect to Google Photos
+    // Cats button
     const catsBtn = document.getElementById('cats-btn');
     if (catsBtn) {
         catsBtn.addEventListener('click', function() {
@@ -139,7 +139,18 @@ function setupActionButtons() {
         });
     }
     
-    // Reviews button - redirect to reviews page
+    // Friends button (NEW)
+    const friendsBtn = document.getElementById('friends-btn');
+    if (friendsBtn) {
+        friendsBtn.addEventListener('click', function() {
+            if (typeof playSound === 'function') {
+                try { playSound('click.mp3'); } catch(e) {}
+            }
+            window.location.href = './friends.html';
+        });
+    }
+    
+    // Reviews button
     const reviewsBtn = document.getElementById('reviews-btn');
     if (reviewsBtn) {
         reviewsBtn.addEventListener('click', function() {

@@ -1,0 +1,66 @@
+/* Friends page specific styles */
+
+.friends-container {
+    background: rgba(15, 10, 5, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #7A2E1C;
+}
+
+/* Friend item styling - matches Discord friends list */
+.friend-item {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 140, 66, 0.2);
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.friend-item:hover {
+    background: rgba(255, 140, 66, 0.08);
+    border-color: rgba(255, 140, 66, 0.5);
+    transform: translateX(3px);
+}
+
+.friend-avatar {
+    width: 40px;
+    height: 40px;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 140, 66, 0.3);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.friend-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.friend-status {
+    font-size: 10px;
+}
+
+/* Status dots for friends */
+.friend-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.friend-status-dot.online { background-color: #43b581; }
+.friend-status-dot.idle { background-color: #faa61a; }
+.friend-status-dot.dnd { background-color: #f04747; }
+.friend-status-dot.offline { background-color: #747f8d; }
+
+/* Skeleton loading */
+.friend-skeleton {
+    background: rgba(255, 255, 255, 0.03);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
