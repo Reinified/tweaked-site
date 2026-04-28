@@ -1,17 +1,19 @@
-/* Friends page specific styles */
+/* Cool People */
 
-.friends-container {
+.coolpeople-container {
     background: rgba(15, 10, 5, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #7A2E1C;
+    overflow: visible;  /* Add this line */
 }
 
 /* Grid layout - 8 per row */
-.friends-grid {
+.coolpeople-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 20px;
+    overflow: visible;  /* Add this line */
 }
 
 /* Friend card styling */
@@ -25,6 +27,7 @@
 
 .friend-card:hover {
     transform: scale(1.05);
+    z-index: 10;
 }
 
 .friend-card:active {
@@ -111,19 +114,19 @@
 
 /* Responsive: fewer columns on smaller screens */
 @media (max-width: 1024px) {
-    .friends-grid {
+    .coolpeople-grid {
         grid-template-columns: repeat(6, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .friends-grid {
+    .coolpeople-grid {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 480px) {
-    .friends-grid {
+    .coolpeople-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }

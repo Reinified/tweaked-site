@@ -139,14 +139,14 @@ function setupActionButtons() {
         });
     }
     
-    // Friends button (NEW)
-    const friendsBtn = document.getElementById('friends-btn');
-    if (friendsBtn) {
-        friendsBtn.addEventListener('click', function() {
+    // Cool People button (NEW)
+    const coolpeopleBtn = document.getElementById('coolpeople-btn');
+    if (coolpeople) {
+        coolpeople.addEventListener('click', function() {
             if (typeof playSound === 'function') {
                 try { playSound('click.mp3'); } catch(e) {}
             }
-            window.location.href = './friends.html';
+            window.location.href = './coolpeople.html';
         });
     }
     

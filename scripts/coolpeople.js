@@ -1,9 +1,9 @@
-// Friends data (all functionality from original block)
-const friendsData = [
+// coolpeople data (all functionality from original block)
+const coolpeopleData = [
     { 
         name: 'kohrad', 
         sound: 'kohrad.mp3', 
-        toast: 'MY BEST FRIEND!111!!!!1',
+        toast: 'MY BEST coolpeople!111!!!!1',
         type: 'click'
     },
     { 
@@ -33,58 +33,58 @@ const friendsData = [
     }
 ];
 
-function loadFriends() {
-    const friendsGrid = document.getElementById('friends-grid');
-    if (!friendsGrid) return;
+function loadcoolpeople() {
+    const coolpeopleGrid = document.getElementById('coolpeople-grid');
+    if (!coolpeopleGrid) return;
     
-    friendsGrid.innerHTML = '';
+    coolpeopleGrid.innerHTML = '';
     
-    friendsData.forEach(friend => {
-        const friendCard = document.createElement('div');
-        friendCard.className = 'friend-card';
-        friendCard.setAttribute('data-title', friend.name);
+    coolpeopleData.forEach(coolpeople => {
+        const coolpeopleCard = document.createElement('div');
+        coolpeopleCard.className = 'coolpeople-card';
+        coolpeopleCard.setAttribute('data-title', coolpeople.name);
         
         // Build inner HTML
-        friendCard.innerHTML = `
-            <div class="friend-avatar">
-                <img src="./assets/profiles/${friend.name}.png" 
+        coolpeopleCard.innerHTML = `
+            <div class="coolpeople-avatar">
+                <img src="./assets/profiles/${coolpeople.name}.png" 
                      loading="lazy"
                      onerror="this.src='./assets/profiles/default.png'">
             </div>
-            <p class="friend-name">${friend.name}</p>
+            <p class="coolpeople-name">${coolpeople.name}</p>
         `;
         
         // Add click handler based on type
-        friendCard.addEventListener('click', (e) => {
+        coolpeopleCard.addEventListener('click', (e) => {
             // Play sound (use playSoundRestart for Obama to trigger secret)
-            if (friend.name === 'obama') {
+            if (coolpeople.name === 'obama') {
                 if (typeof playSoundRestart === 'function') {
-                    playSoundRestart(friend.sound);
+                    playSoundRestart(coolpeople.sound);
                 }
             } else {
                 if (typeof playSound === 'function') {
-                    playSound(friend.sound);
+                    playSound(coolpeople.sound);
                 }
             }
             
             // Show toast
             if (typeof showToast === 'function') {
-                showToast(friend.toast);
+                showToast(coolpeople.toast);
             }
             
             // Handle link or regular click
-            if (friend.type === 'link' && friend.url) {
-                window.open(friend.url, '_blank');
+            if (coolpeople.type === 'link' && coolpeople.url) {
+                window.open(coolpeople.url, '_blank');
             }
         });
         
-        friendsGrid.appendChild(friendCard);
+        coolpeopleGrid.appendChild(coolpeopleCard);
     });
 }
 
-// Start loading friends when page is ready
+// Start loading coolpeople when page is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadFriends);
+    document.addEventListener('DOMContentLoaded', loadcoolpeople);
 } else {
-    loadFriends();
+    loadcoolpeople();
 }
