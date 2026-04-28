@@ -5,7 +5,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #7A2E1C;
-    overflow: hidden; 
+    overflow: visible;
 }
 
 /* Grid layout - 8 per row */
@@ -13,8 +13,7 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 20px;
-    overflow: hidden;
-    padding: 4px;
+    overflow: visible;
 }
 
 /* Cool person card styling */
@@ -28,17 +27,12 @@
 }
 
 .cool-card:hover {
-    transform: translateY(-4px);
+    transform: scale(1.05);
+    z-index: 10;
 }
 
 .cool-card:active {
-    transform: translateY(0px);
-}
-
-/* Add glow effect on hover instead of scale */
-.cool-card:hover .cool-avatar {
-    border-color: #ffad5b;
-    box-shadow: 0 0 8px rgba(255, 140, 66, 0.5);
+    transform: scale(0.95);
 }
 
 .cool-avatar {
@@ -48,7 +42,6 @@
     overflow: hidden;
     margin-bottom: 8px;
     background: #1a1a1a;
-    transition: all 0.15s ease;  /* Add this */
 }
 
 .cool-avatar img {

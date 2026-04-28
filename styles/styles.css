@@ -235,27 +235,36 @@ img#trackart {
     display: none;
 }
 
-/* Buttons */
+/* Buttons - FIXED (no overflow) */
 .action-icon-btn {
     position: relative;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 140, 66, 0.4);
-    padding: 6px;
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
     cursor: pointer;
     transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
+}
+
+.action-icon-btn img {
+    width: 16px;
+    height: 16px;
 }
 
 .action-icon-btn:hover {
     background: rgba(255, 140, 66, 0.15);
     border-color: #ffad5b;
-    transform: translateY(-1px);
+    transform: none;
+    z-index: 100;
 }
 
 .action-icon-btn:active {
-    transform: translateY(0px);
+    transform: none;
 }
 
 /* Tooltip styling */
@@ -274,7 +283,7 @@ img#trackart {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease;
-    z-index: 100;
+    z-index: 101;
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: 0.5px;
     border: 1px solid rgba(255, 140, 66, 0.3);
@@ -291,7 +300,7 @@ img#trackart {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease;
-    z-index: 100;
+    z-index: 101;
 }
 
 .action-icon-btn:hover::before,
@@ -311,6 +320,7 @@ img#trackart {
     justify-content: space-between;
     flex-wrap: nowrap;
     gap: 8px;
+    overflow: visible;
 }
 
 .name-row h1 {
@@ -323,18 +333,7 @@ img#trackart {
     display: flex;
     gap: 6px;
     flex-shrink: 0;
-}
-
-/* Adjust button size to be more compact */
-.action-icon-btn {
-    padding: 4px;
-    min-width: 28px;
-    min-height: 28px;
-}
-
-.action-icon-btn img {
-    width: 16px;
-    height: 16px;
+    overflow: visible;
 }
 
 /* Performance optimizations */
