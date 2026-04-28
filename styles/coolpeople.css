@@ -28,11 +28,17 @@
 }
 
 .cool-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-4px);
 }
 
 .cool-card:active {
-    transform: scale(0.95);
+    transform: translateY(0px);
+}
+
+/* Add glow effect on hover instead of scale */
+.cool-card:hover .cool-avatar {
+    border-color: #ffad5b;
+    box-shadow: 0 0 8px rgba(255, 140, 66, 0.5);
 }
 
 .cool-avatar {
@@ -42,6 +48,7 @@
     overflow: hidden;
     margin-bottom: 8px;
     background: #1a1a1a;
+    transition: all 0.15s ease;  /* Add this */
 }
 
 .cool-avatar img {
