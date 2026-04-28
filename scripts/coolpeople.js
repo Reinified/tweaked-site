@@ -1,36 +1,35 @@
 // Cool People data
 const coolPeopleData = [
     { 
-        name: 'kohrad', 
+        name: 'gusto jose',
+        file: 'kohrad',
         sound: 'kohrad.mp3', 
         toast: 'MY BEST FRIEND!111!!!!1',
         type: 'click'
     },
     { 
-        name: 'obama', 
+        name: 'obama',
+        file: 'obamajuankinobi',
         sound: 'obama.mp3', 
         toast: 'grilled cheese obama sandwich',
         type: 'click',
         secret: true
     },
     { 
-        name: 'twixxty', 
-        sound: 'twixxty.mp3',
-        toast: 'Clicked on twixxty',
+        name: 'twix bar',
+        file: 'twixxty',
         type: 'link',
         url: 'https://twixxt.defautluser0.xyz/'
     },
     { 
-        name: 'lamp', 
-        sound: 'lamp.mp3',
-        toast: 'Clicked on lamp',
+        name: 'lamp',
+        file: 'lampdelivery',
         type: 'link',
         url: 'https://lamp.delivery'
     },
     { 
-        name: 'coco', 
-        sound: 'coco.mp3',
-        toast: 'Clicked on coco',
+        name: 'coco',             
+        file: 'cocobo1',
         type: 'link',
         url: 'https://www.raincord.dev/'
     }
@@ -49,9 +48,9 @@ function loadCoolPeople() {
         
         coolCard.innerHTML = `
             <div class="cool-avatar">
-                <img src="./assets/profiles/${person.name}.png" 
+                <img src="../assets/profiles/${person.file}.png" 
                      loading="lazy"
-                     onerror="this.src='./assets/profiles/default.png'">
+                     onerror="this.src='../assets/profiles/default.png'">
             </div>
             <p class="cool-name">${person.name}</p>
         `;
