@@ -5,7 +5,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #7A2E1C;
-    overflow: visible;
+    overflow: hidden; 
 }
 
 /* Grid layout - 8 per row */
@@ -13,7 +13,8 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 20px;
-    overflow: visible;
+    overflow: hidden;
+    padding: 4px;
 }
 
 /* Cool person card styling */
@@ -28,7 +29,6 @@
 
 .cool-card:hover {
     transform: scale(1.05);
-    z-index: 10;
 }
 
 .cool-card:active {
