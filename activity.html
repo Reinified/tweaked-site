@@ -13,7 +13,7 @@
 
 <body class="min-h-screen flex items-center justify-center p-4 md:p-8" data-page="music">
     
-    <div id="app" class="w-full max-w-4xl glass overflow-hidden">
+   <div id="app" class="w-full max-w-4xl glass overflow-hidden">
         <a href="https://discord.gg/nf8E4ajASM" class="discord-btn w-full block text-white py-3 font-bold active:scale-95 uppercase tracking-widest text-[10px] relative z-10 overflow-hidden">
             <div class="animate-marquee whitespace-nowrap flex items-center gap-8">
                 <span>JOIN MY DISCORD SERVER </span><span>JOIN MY DISCORD SERVER </span>
@@ -28,12 +28,12 @@
         </a>
         <div class="relative">
             <div class="h-32 bg-white/5 overflow-hidden">
-                <img id="banner" src="" class="w-full h-full object-cover opacity-60">
+                <img id="banner" src="" class="w-full h-full object-cover opacity-60" loading="lazy">
             </div>
             <div class="absolute -bottom-10 left-6">
                 <div class="relative">
                     <div class="w-20 h-20 border-4 border-[#0a0a0a] bg-[#111] overflow-hidden">
-                        <img id="avatar" src="" class="w-full h-full">
+                        <img id="avatar" src="" class="w-full h-full" loading="lazy">
                     </div>
                     <div id="status-dot" class="status-dot scale-75"></div>
                 </div>
@@ -51,6 +51,9 @@
                         <div class="action-buttons-group">
                             <button id="cats-btn" class="action-icon-btn" data-tooltip="Cats">
                                 <img src="./assets/icons/cats.png" alt="cats" class="w-4 h-4" loading="lazy">
+                            </button>
+                            <button id="coolpeople-btn" class="action-icon-btn" data-tooltip="Cool People">
+                                <img src="./assets/icons/coolpeople.png" alt="cool people" class="w-4 h-4" loading="lazy">
                             </button>
                             <button id="reviews-btn" class="action-icon-btn" data-tooltip="User Reviews">
                                 <img src="./assets/icons/reviews.png" alt="reviews" class="w-4 h-4" loading="lazy">
@@ -129,7 +132,6 @@
                     <a href="index.html" class="discord-tab">Board</a>
                     <a href="interests.html" class="discord-tab">Interests</a>
                     <a href="activity.html" class="discord-tab">Activity</a>
-                    <a href="links.html" class="discord-tab">Links</a>
                 </div>
 
                 <!-- Loaded Modules -->
