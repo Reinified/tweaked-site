@@ -1,9 +1,9 @@
-// coolpeople data (all functionality from original block)
-const coolpeopleData = [
+// Cool People data
+const coolPeopleData = [
     { 
         name: 'kohrad', 
         sound: 'kohrad.mp3', 
-        toast: 'MY BEST coolpeople!111!!!!1',
+        toast: 'MY BEST FRIEND!111!!!!1',
         type: 'click'
     },
     { 
@@ -16,75 +16,74 @@ const coolpeopleData = [
     { 
         name: 'twixxty', 
         sound: 'twixxty.mp3',
+        toast: 'Clicked on twixxty',
         type: 'link',
         url: 'https://twixxt.defautluser0.xyz/'
     },
     { 
         name: 'lamp', 
         sound: 'lamp.mp3',
+        toast: 'Clicked on lamp',
         type: 'link',
         url: 'https://lamp.delivery'
     },
     { 
         name: 'coco', 
         sound: 'coco.mp3',
+        toast: 'Clicked on coco',
         type: 'link',
         url: 'https://www.raincord.dev/'
     }
 ];
 
-function loadcoolpeople() {
-    const coolpeopleGrid = document.getElementById('coolpeople-grid');
-    if (!coolpeopleGrid) return;
+function loadCoolPeople() {
+    const coolGrid = document.getElementById('cool-grid');
+    if (!coolGrid) return;
     
-    coolpeopleGrid.innerHTML = '';
+    coolGrid.innerHTML = '';
     
-    coolpeopleData.forEach(coolpeople => {
-        const coolpeopleCard = document.createElement('div');
-        coolpeopleCard.className = 'coolpeople-card';
-        coolpeopleCard.setAttribute('data-title', coolpeople.name);
+    coolPeopleData.forEach(person => {
+        const coolCard = document.createElement('div');
+        coolCard.className = 'cool-card';
+        coolCard.setAttribute('data-title', person.name);
         
-        // Build inner HTML
-        coolpeopleCard.innerHTML = `
-            <div class="coolpeople-avatar">
-                <img src="./assets/profiles/${coolpeople.name}.png" 
+        coolCard.innerHTML = `
+            <div class="cool-avatar">
+                <img src="./assets/profiles/${person.name}.png" 
                      loading="lazy"
                      onerror="this.src='./assets/profiles/default.png'">
             </div>
-            <p class="coolpeople-name">${coolpeople.name}</p>
+            <p class="cool-name">${person.name}</p>
         `;
         
-        // Add click handler based on type
-        coolpeopleCard.addEventListener('click', (e) => {
-            // Play sound (use playSoundRestart for Obama to trigger secret)
-            if (coolpeople.name === 'obama') {
+        // Add click handler
+        coolCard.addEventListener('click', (e) => {
+            if (person.name === 'obama') {
                 if (typeof playSoundRestart === 'function') {
-                    playSoundRestart(coolpeople.sound);
+                    playSoundRestart(person.sound);
                 }
             } else {
                 if (typeof playSound === 'function') {
-                    playSound(coolpeople.sound);
+                    playSound(person.sound);
                 }
             }
             
-            // Show toast
             if (typeof showToast === 'function') {
-                showToast(coolpeople.toast);
+                showToast(person.toast);
             }
             
-            // Handle link or regular click
-            if (coolpeople.type === 'link' && coolpeople.url) {
-                window.open(coolpeople.url, '_blank');
+            if (person.type === 'link' && person.url) {
+                window.open(person.url, '_blank');
             }
         });
         
-        coolpeopleGrid.appendChild(coolpeopleCard);
+        coolGrid.appendChild(coolCard);
     });
 }
 
-// Start loading coolpeople when page is ready
+// Start loading cool people when page is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadcoolpeople);
+    document.addEventListener('DOMContentLoaded', loadCoolPeople);
 } else {
-    loadcoolpeople();
+    loadCoolPeople();
 }

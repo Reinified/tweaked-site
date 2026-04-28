@@ -139,16 +139,16 @@ function setupActionButtons() {
         });
     }
     
-    // Cool People button (NEW)
-    const coolpeopleBtn = document.getElementById('coolpeople-btn');
-    if (coolpeople) {
-        coolpeople.addEventListener('click', function() {
-            if (typeof playSound === 'function') {
-                try { playSound('click.mp3'); } catch(e) {}
-            }
-            window.location.href = './coolpeople.html';
-        });
-    }
+// Cool People button
+const coolpeopleBtn = document.getElementById('coolpeople-btn');
+if (coolpeopleBtn) {
+    coolpeopleBtn.addEventListener('click', function() {
+        if (typeof playSound === 'function') {
+            try { playSound('click.mp3'); } catch(e) {}
+        }
+        window.location.href = './coolpeople.html';
+    });
+}
     
     // Reviews button
     const reviewsBtn = document.getElementById('reviews-btn');
