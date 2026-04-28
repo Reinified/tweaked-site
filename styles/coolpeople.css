@@ -1,72 +1,275 @@
-/* Cool People page specific styles */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.cool-container {
+body {
+    background-image: url("../assets/background.png");
+    background-color: #0a0a0a;
+    background-size: cover;
+    background-position: center;
+    color: #ddd;
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#global-name {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.glass {
     background: rgba(15, 10, 5, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #7A2E1C;
-    overflow: hidden;
 }
 
-/* Grid layout - 8 per row */
-.cool-grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 20px;
-    overflow: hidden;
-    padding: 4px;
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
-/* Cool person card styling */
-.cool-card {
+.animate-marquee {
+    display: flex;
+    width: fit-content;
+    animation: marquee 15s linear infinite;
+}
+
+.status-dot {
+    width: 32px;
+    height: 32px;
+    border: 4px solid #0a0a0a;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
+
+.status-online { background-color: #43b581; }
+.status-idle { background-color: #faa61a; }
+.status-dnd { background-color: #f04747; }
+.status-offline { background-color: #747f8d; }
+
+.discord-btn {
+    background: #1E90FF;
+    color: #111827;
+}
+
+/* Tabs */
+.discord-tab {
+    position: relative;
+    color: #b5bac1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.discord-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff8c42;
+    border-radius: 2px 2px 0 0;
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+}
+
+.discord-tab:visited {
+    color: #b5bac1;
+}
+
+.discord-tab:hover {
+    color: #dbdee1;
+}
+
+.discord-tab:hover::after {
+    transform: scaleX(1);
+}
+
+/* Sticky left window */
+.sticky-left {
+    align-self: start;
+    position: 
+     top, 0;
+}
+
+/* Active Tabs */
+body[data-page="board"] .discord-tab[href$="index.html"] {
+    color: #ffffff;
+}
+body[data-page="board"] .discord-tab[href$="index.html"]::after {
+    transform: scaleX(1);
+}
+
+body[data-page="interests"] .discord-tab[href$="interests.html"] {
+    color: #ffffff;
+}
+body[data-page="interests"] .discord-tab[href$="interests.html"]::after {
+    transform: scaleX(1);
+}
+
+body[data-page="music"] .discord-tab[href$="activity.html"] {
+    color: #ffffff;
+}
+body[data-page="music"] .discord-tab[href$="activity.html"]::after {
+    transform: scaleX(1);
+}
+
+body[data-page="links"] .discord-tab[href$="links.html"] {
+    color: #ffffff;
+}
+body[data-page="links"] .discord-tab[href$="links.html"]::after {
+    transform: scaleX(1);
+}
+
+/* Tooltips */
+.music-tooltip {
+    position: relative;
+    overflow: visible !important; 
+}
+
+.music-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px); 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111214;
+    color: #dbdee1;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    z-index: 50;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.24);
+}
+
+.music-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #111214;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    z-index: 50;
+}
+
+.music-tooltip:hover::after,
+.music-tooltip:hover::before {
+    opacity: 1;
+}
+
+/* --- LAST.FM NOW PLAYING (Discord Style) --- */
+.nowplayingcard {
+    font-family: 'Space Grotesk', sans-serif;
+    width: 100%;
+}
+
+.nowplayingcontainer-inner {
+    width: 100%;
+    background: rgba(15, 1, 5, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #ff8c42;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.nowplayingcontainer-inner:hover {
+    border-color: #ffffff;
+}
+
+img#trackart {
+    width: 56px;
+    height: 56px;
+    border-radius: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.trackInfo {
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.trackInfo a {
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+.trackInfo a:nth-child(odd) {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.trackInfo a:nth-child(even) {
+    color: #b5bac1;
+    font-size: 12px;
+}
+
+.trackInfo img {
+    display: none;
+}
+
+/* Buttons - FIXED (no overflow) */
+.action-icon-btn {
+    position: relative;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 140, 66, 0.4);
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
     cursor: pointer;
     transition: all 0.15s ease;
-    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
 }
 
-.cool-card:hover {
-    transform: translateY(-4px);
+.action-icon-btn img {
+    width: 16px;
+    height: 16px;
 }
 
-.cool-card:active {
-    transform: translateY(0px);
-}
-
-/* Glow effect on hover */
-.cool-card:hover .cool-avatar {
+.action-icon-btn:hover {
+    background: rgba(255, 140, 66, 0.15);
     border-color: #ffad5b;
-    box-shadow: 0 0 8px rgba(255, 140, 66, 0.5);
+    transform: none;
+    z-index: 100;
 }
 
-.cool-avatar {
-    width: 64px;
-    height: 64px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    margin-bottom: 8px;
-    background: #1a1a1a;
-    transition: all 0.15s ease;
-}
-
-.cool-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.cool-name {
-    font-size: 10px;
-    font-weight: bold;
-    color: white;
-    text-align: center;
+.action-icon-btn:active {
+    transform: none;
 }
 
 /* Tooltip styling */
-.cool-card::before {
-    content: attr(data-title);
+.action-icon-btn::before {
+    content: attr(data-tooltip);
     position: absolute;
     bottom: calc(100% + 8px);
     left: 50%;
@@ -80,13 +283,13 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease;
-    z-index: 100;
+    z-index: 101;
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: 0.5px;
     border: 1px solid rgba(255, 140, 66, 0.3);
 }
 
-.cool-card::after {
+.action-icon-btn::after {
     content: '';
     position: absolute;
     bottom: calc(100% + 2px);
@@ -97,40 +300,55 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease;
-    z-index: 100;
+    z-index: 101;
 }
 
-.cool-card:hover::before,
-.cool-card:hover::after {
+.action-icon-btn:hover::before,
+.action-icon-btn:hover::after {
     opacity: 1;
 }
 
-/* Skeleton loading */
-.cool-skeleton {
-    background: rgba(255, 255, 255, 0.03);
-    animation: pulse 1.5s ease-in-out infinite;
+/* Fix horizontal scrollbar on left side */
+.left-side-content {
+    overflow-x: hidden;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.7; }
+/* Make name and buttons stay on same line without overflow */
+.name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow: visible;
 }
 
-/* Responsive: fewer columns on smaller screens */
-@media (max-width: 1024px) {
-    .cool-grid {
-        grid-template-columns: repeat(6, 1fr);
-    }
+.name-row h1 {
+    flex-shrink: 1;
+    min-width: 0;
+    white-space: nowrap;
 }
 
-@media (max-width: 768px) {
-    .cool-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+.action-buttons-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+    overflow: visible;
 }
 
-@media (max-width: 480px) {
-    .cool-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+/* Performance optimizations */
+.glass {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.animate-marquee {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.review-item,
+.discord-tab,
+.action-icon-btn {
+    will-change: transform;
 }
