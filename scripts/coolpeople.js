@@ -6,7 +6,7 @@ const coolPeopleList = [
     'lampdelivery',
     'cocobo1',
     `omarchy`
-    `eminem`
+    `m&m`
 ];
 
 function loadCoolPeople() {
