@@ -1,0 +1,17 @@
+<div class="cool-card" data-title="lamp">
+    <div class="cool-avatar">
+        <img src="../../assets/profiles/lampdelivery.png" 
+             loading="lazy"
+             onerror="this.src='../../assets/profiles/default.png'">
+    </div>
+    <p class="cool-name">lamp</p>
+</div>
+
+<script>
+    (function() {
+        const card = document.currentScript.parentElement;
+        card.addEventListener('click', () => {
+            window.open('https://lamp.delivery', '_blank');
+        });
+    })();
+</script>

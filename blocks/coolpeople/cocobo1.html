@@ -1,0 +1,17 @@
+<div class="cool-card" data-title="coco">
+    <div class="cool-avatar">
+        <img src="../../assets/profiles/cocobo1.png" 
+             loading="lazy"
+             onerror="this.src='../../assets/profiles/default.png'">
+    </div>
+    <p class="cool-name">coco</p>
+</div>
+
+<script>
+    (function() {
+        const card = document.currentScript.parentElement;
+        card.addEventListener('click', () => {
+            window.open('https://www.raincord.dev/', '_blank');
+        });
+    })();
+</script>

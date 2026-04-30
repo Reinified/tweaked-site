@@ -1,38 +1,10 @@
-// Cool People data
-const coolPeopleData = [
-    { 
-        name: 'gusto jose',
-        file: 'kohrad',
-        sound: 'kohrad.mp3', 
-        toast: 'MY BEST FRIEND!111!!!!1',
-        type: 'click'
-    },
-    { 
-        name: 'obama',
-        file: 'obamajuankinobi',
-        sound: 'obama.mp3', 
-        toast: 'grilled cheese obama sandwich',
-        type: 'click',
-        secret: true
-    },
-    { 
-        name: 'twix bar',
-        file: 'twixxty',
-        type: 'link',
-        url: 'https://twixxt.defautluser0.xyz/'
-    },
-    { 
-        name: 'lamp',
-        file: 'lampdelivery',
-        type: 'link',
-        url: 'https://lamp.delivery'
-    },
-    { 
-        name: 'coco',             
-        file: 'cocobo1',
-        type: 'link',
-        url: 'https://www.raincord.dev/'
-    }
+// Cool People - loads individual modules from blocks/coolpeople/
+const coolPeopleList = [
+    'kohrad',
+    'obamajuankinobi',
+    'twixxty',
+    'lampdelivery',
+    'cocobo1'
 ];
 
 function loadCoolPeople() {
@@ -41,42 +13,44 @@ function loadCoolPeople() {
     
     coolGrid.innerHTML = '';
     
-    coolPeopleData.forEach(person => {
+    coolPeopleList.forEach(personId => {
+        // Create placeholder card
         const coolCard = document.createElement('div');
         coolCard.className = 'cool-card';
-        coolCard.setAttribute('data-title', person.name);
+        coolCard.setAttribute('data-person', personId);
         
+        // Show skeleton while loading
         coolCard.innerHTML = `
-            <div class="cool-avatar">
-                <img src="../assets/profiles/${person.file}.png" 
-                     loading="lazy"
-                     onerror="this.src='../assets/profiles/default.png'">
-            </div>
-            <p class="cool-name">${person.name}</p>
+            <div class="cool-avatar cool-skeleton"></div>
+            <p class="cool-name cool-skeleton-text">Loading...</p>
         `;
-        
-        // Add click handler
-        coolCard.addEventListener('click', (e) => {
-            if (person.name === 'obama') {
-                if (typeof playSoundRestart === 'function') {
-                    playSoundRestart(person.sound);
-                }
-            } else {
-                if (typeof playSound === 'function') {
-                    playSound(person.sound);
-                }
-            }
-            
-            if (typeof showToast === 'function') {
-                showToast(person.toast);
-            }
-            
-            if (person.type === 'link' && person.url) {
-                window.open(person.url, '_blank');
-            }
-        });
-        
         coolGrid.appendChild(coolCard);
+        
+        // Load individual HTML file
+        fetch(`../blocks/coolpeople/${personId}.html`)
+            .then(res => {
+                if (!res.ok) throw new Error(`Failed to load ${personId}`);
+                return res.text();
+            })
+            .then(html => {
+                // Replace the placeholder with loaded content
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const newCard = tempDiv.firstElementChild;
+                
+                if (newCard) {
+                    coolCard.parentNode.replaceChild(newCard, coolCard);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                coolCard.innerHTML = `
+                    <div class="cool-avatar" style="background:#330000;">
+                        <img src="../../assets/profiles/default.png" loading="lazy">
+                    </div>
+                    <p class="cool-name" style="color:#ff6666;">${personId}</p>
+                `;
+            });
     });
 }
 

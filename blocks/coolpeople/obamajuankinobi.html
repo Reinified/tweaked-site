@@ -1,0 +1,18 @@
+<div class="cool-card" data-title="obama">
+    <div class="cool-avatar">
+        <img src="../../assets/profiles/obamajuankinobi.png" 
+             loading="lazy"
+             onerror="this.src='../../assets/profiles/default.png'">
+    </div>
+    <p class="cool-name">obama</p>
+</div>
+
+<script>
+    (function() {
+        const card = document.currentScript.parentElement;
+        card.addEventListener('click', () => {
+            if (typeof playSoundRestart === 'function') playSoundRestart('obama.mp3');
+            if (typeof showToast === 'function') showToast('grilled cheese obama sandwich');
+        });
+    })();
+</script>

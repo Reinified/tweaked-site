@@ -123,3 +123,26 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* Skeleton loading styles */
+.cool-skeleton {
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.cool-skeleton-text {
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    width: 60px;
+    height: 10px;
+    margin: 0 auto;
+    border-radius: 0;
+    color: transparent;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
