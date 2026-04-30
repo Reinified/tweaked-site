@@ -5,7 +5,7 @@ const coolPeopleList = [
     'twixxty',
     'lampdelivery',
     'cocobo1',
-    `omarchy`
+    `omarchy`,
     `m&m`
 ];
 
