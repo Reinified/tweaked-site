@@ -6,7 +6,9 @@ const coolPeopleList = [
     'lampdelivery',
     'cocobo1',
     'omawr',
-    'eminem'
+    'eminem',
+    'amaroreo',
+    'apoc'
 ];
 
 function loadCoolPeople() {
@@ -110,6 +112,12 @@ function handlePersonClick(personId, displayName) {
         },
         'eminem': () => {
             window.open('https://www.eminem.com/', '_blank');
+        },
+        'amaroreo': () => {
+            window.open('https://amarkherala.github.io', '_blank');
+        },
+        'apoc': () => {
+            window.open('https://www.smashintopieces.com/apoc-epk', '_blank');
         }
     };
     
