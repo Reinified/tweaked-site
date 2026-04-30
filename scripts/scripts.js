@@ -107,25 +107,6 @@ function playSoundRestart(file) {
     window.currentSound.play();
 }
 
-// Obama
-let obamaClickCount = 0;
-
-function playSoundRestart(file) {
-    if (window.currentSound) {
-        window.currentSound.pause();
-        window.currentSound.currentTime = 0;
-    }
-
-    window.currentSound = new Audio('./sounds/' + file);
-    window.currentSound.play();
-
-    obamaClickCount++;
-
-    if (obamaClickCount >= 10) {
-        window.location.href = "./secret/obama.html";
-    }
-}
-
 // Action Buttons
 function setupActionButtons() {
     // Cats button
@@ -150,16 +131,15 @@ if (coolpeopleBtn) {
     });
 }
     
-    // Reviews button
-    const reviewsBtn = document.getElementById('reviews-btn');
-    if (reviewsBtn) {
-        reviewsBtn.addEventListener('click', function() {
-            if (typeof playSound === 'function') {
-                try { playSound('click.mp3'); } catch(e) {}
-            }
-            window.location.href = './reviews.html';
-        });
-    }
+// Reviews button
+const reviewsBtn = document.getElementById('reviews-btn');
+if (reviewsBtn) {
+    reviewsBtn.addEventListener('click', function() {
+        if (typeof playSound === 'function') {
+            try { playSound('click.mp3'); } catch(e) {}
+        }
+        window.location.href = './reviews.html';
+    })};
 }
 
 // Run when DOM is ready
