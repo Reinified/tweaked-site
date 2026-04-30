@@ -35,12 +35,38 @@ function loadCoolPeople() {
                 return res.text();
             })
             .then(html => {
-                // Replace the placeholder with loaded content
+                // Create a temporary container
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = html;
+                
+                // Get the card element
                 const newCard = tempDiv.firstElementChild;
                 
+                // Extract and execute any scripts
+                const scripts = tempDiv.querySelectorAll('script');
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    if (script.src) {
+                        newScript.src = script.src;
+                    } else {
+                        newScript.textContent = script.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                    document.body.removeChild(newScript);
+                });
+                
                 if (newCard) {
+                    // Copy over the click event from the original card's script
+                    // Instead, let's re-attach the click handler manually
+                    const coolAvatar = newCard.querySelector('.cool-avatar');
+                    const coolName = newCard.querySelector('.cool-name');
+                    const dataTitle = newCard.getAttribute('data-title');
+                    
+                    // Re-create click handler based on data-title
+                    newCard.addEventListener('click', (e) => {
+                        handlePersonClick(personId, dataTitle);
+                    });
+                    
                     coolCard.parentNode.replaceChild(newCard, coolCard);
                 }
             })
@@ -54,6 +80,45 @@ function loadCoolPeople() {
                 `;
             });
     });
+}
+
+// Centralized click handler
+function handlePersonClick(personId, displayName) {
+    console.log(`Clicked: ${personId} (${displayName})`);
+    
+    // Define actions for each person
+    const actions = {
+        'kohrad': () => {
+            if (typeof playSound === 'function') playSound('kohrad.mp3');
+            if (typeof showToast === 'function') showToast('MY BEST FRIEND!111!!!!1');
+        },
+        'obamajuankinobi': () => {
+            if (typeof playSoundRestart === 'function') playSoundRestart('obama.mp3');
+            if (typeof showToast === 'function') showToast('grilled cheese obama sandwich');
+        },
+        'twixxty': () => {
+            window.open('https://twixxt.defautluser0.xyz/', '_blank');
+        },
+        'lampdelivery': () => {
+            window.open('https://lamp.delivery', '_blank');
+        },
+        'cocobo1': () => {
+            window.open('https://www.raincord.dev/', '_blank');
+        },
+        'omawr': () => {
+            window.open('https://omardotdev.github.io/', '_blank');
+        },
+        'eminem': () => {
+            window.open('https://www.eminem.com/', '_blank');
+        }
+    };
+    
+    if (actions[personId]) {
+        actions[personId]();
+    } else {
+        console.warn(`No action defined for ${personId}`);
+        if (typeof showToast === 'function') showToast(displayName);
+    }
 }
 
 // Start loading cool people when page is ready
