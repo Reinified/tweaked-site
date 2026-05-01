@@ -353,16 +353,16 @@ img#trackart {
     will-change: transform;
 }
 
-/* Birthday and Timezone row styling */
+/* Birthday and Timezone */
 .birthday-timezone-row {
     display: flex;
     align-items: center;
-    gap: 48px;
-    margin: 4px 0 8px 0;
+    gap: 32px;
+    margin: 0px 0 4px 0;
 }
 
 .connections-header {
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .connection-link {
@@ -370,18 +370,28 @@ img#trackart {
     padding-bottom: 2px;
 }
 
-/* Even spacing for left side */
+/* Compact spacing for left side - NO SCROLL */
 .left-side-content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .left-side-content > div {
     margin-bottom: 0;
 }
 
-/* Adjust specific sections */
+/* Tighter padding inside boxes */
 .left-side-content .bg-black\/20 {
-    margin-bottom: 0;
+    padding: 10px;
+}
+
+.left-side-content .bg-black\/20 h2 {
+    margin-bottom: 4px;
+}
+
+/* Tighter status box */
+.left-side-content .bg-white\/5 {
+    padding: 6px;
+    margin-top: 6px;
 }
