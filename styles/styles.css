@@ -352,3 +352,36 @@ img#trackart {
 .action-icon-btn {
     will-change: transform;
 }
+
+/* Birthday and Timezone row styling */
+.birthday-timezone-row {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin: 4px 0 8px 0;
+}
+
+.connections-header {
+    margin-bottom: 4px;
+}
+
+.connection-link {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+/* Even spacing for left side */
+.left-side-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.left-side-content > div {
+    margin-bottom: 0;
+}
+
+/* Adjust specific sections */
+.left-side-content .bg-black\/20 {
+    margin-bottom: 0;
+}

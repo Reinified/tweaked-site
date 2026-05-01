@@ -50,7 +50,7 @@
         <div class="pt-14 px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6 h-[615px]">
             
             <!-- LEFT SIDE -->
-            <div class="space-y-3 overflow-y-auto overflow-x-hidden pr-2 left-side-content">
+            <div class="space-y-4 overflow-y-auto overflow-x-hidden pr-2 left-side-content">
                 <!-- Name + Action Buttons row -->
                 <div>
                     <div class="name-row">
@@ -86,17 +86,14 @@
                     <p class="text-xs leading-relaxed text-gray-300">"Don't lose your mind over people who dont mind losing you."</p>
                 </div>
 
-                <!-- Flat Sections -->
-                    <div class="flex flex-col">
-                    <!-- Birthday and Timezone row -->
-                    <div class="flex items-center gap-6 py-2">
-                
+                <!-- Birthday and Timezone row -->
+                <div class="birthday-timezone-row">
                     <div>
-                        <p class="text-[9px] font-bold text-gray-500 uppercase">Birthday</p>
+                        <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Birthday</p>
                         <p class="text-xs text-gray-300">Mar 7, 2006</p>
                     </div>
                     <div>
-                        <p class="text-[9px] font-bold text-gray-500 uppercase">Timezone</p>
+                        <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Timezone</p>
                         <p class="text-xs text-gray-300 flex items-center gap-1">
                             <span id="clock-emoji">🕐</span>
                             <span id="clock-time">--:-- --</span>
@@ -104,11 +101,14 @@
                         </p>
                     </div>
                 </div>
-    
-                <div class="mb-1">
-                    <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Connections</p>
-                </div>
-                    <a href="https://open.spotify.com/user/dpctxo0uxqedf9ix81yct0avq" class="flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
+
+                <!-- Connections -->
+                <div>
+                    <div class="connections-header">
+                        <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Connections</p>
+                    </div>
+                    
+                    <a href="https://open.spotify.com/user/dpctxo0uxqedf9ix81yct0avq" class="connection-link flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
                         <img src="./assets/icons/spotify.png" class="w-4 h-4" loading="lazy">
                         <div class="flex items-center gap-1">
                             <p class="text-xs text-gray-300">soulz</p>
@@ -116,7 +116,7 @@
                         </div>
                     </a>
 
-                    <a href="https://instagram.com/soulz0387" class="flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
+                    <a href="https://instagram.com/soulz0387" class="connection-link flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
                         <img src="./assets/icons/instagram.png" class="w-4 h-4" loading="lazy">
                         <div class="flex items-center gap-1">
                             <p class="text-xs text-gray-300">soulz0387</p>
@@ -124,7 +124,7 @@
                         </div>
                     </a>
 
-                    <a href="https://www.youtube.com/channel/UC7B6E4tKGXwQGXzkVSm4l1Q" class="flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
+                    <a href="https://www.youtube.com/channel/UC7B6E4tKGXwQGXzkVSm4l1Q" class="connection-link flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
                         <img src="./assets/icons/youtube.png" class="w-4 h-4" loading="lazy">
                         <div class="flex items-center gap-1">
                             <p class="text-xs text-gray-300">soulz</p>
@@ -132,7 +132,7 @@
                         </div>
                     </a>
 
-                    <a href="https://psnprofiles.com/xJayzTheWeird_" class="flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
+                    <a href="https://psnprofiles.com/xJayzTheWeird_" class="connection-link flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
                         <img src="./assets/icons/playstation.png" class="w-4 h-4" loading="lazy">
                         <div class="flex items-center gap-1">
                             <p class="text-xs text-gray-300">JoshandMJ23</p>
