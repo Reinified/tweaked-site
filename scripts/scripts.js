@@ -11,8 +11,7 @@ async function fetchStatus() {
         
         document.getElementById('global-name').innerText = data.discord_user.global_name || data.discord_user.username;
         document.getElementById('username').innerText = `@${data.discord_user.username}`;
-        document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}?size=256`;
-        document.getElementById('banner').src = `https://cdn.discordapp.com/banners/${USER_ID}/a_301562bacb3bdffe15204cf2e19b5ed0?size=1024`;
+        document.getElementById('banner').src = `https://cdn.discordapp.com/banners/${USER_ID}/${lookupData.banner.id}.${extension}?size=1024`;
         document.getElementById('status-dot').className = `status-dot scale-75 status-${data.discord_status}`;
         
         const act = data.activities.find(a => a.type === 4);
@@ -148,3 +147,41 @@ if (document.readyState === 'loading') {
 } else {
     setupActionButtons();
 }
+
+// ========== CLOCK UPDATE (Timezone EST) ==========
+function updateClock() {
+    const now = new Date();
+    
+    // Convert to EST (UTC-5)
+    const estOffset = -5 * 60;
+    const localOffset = now.getTimezoneOffset();
+    const estTime = new Date(now.getTime() + (estOffset + localOffset) * 60000);
+    
+    let hours = estTime.getHours();
+    const minutes = estTime.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 12 instead of 0
+    
+    const timeString = `${hours}:${minutes} ${ampm}`;
+    
+    // Update clock emoji based on hour
+    const hour12 = hours % 12 || 12;
+    const clockEmojis = {
+        1: '🕐', 2: '🕑', 3: '🕒', 4: '🕓', 5: '🕔', 6: '🕕',
+        7: '🕖', 8: '🕗', 9: '🕘', 10: '🕙', 11: '🕚', 12: '🕛'
+    };
+    const emoji = clockEmojis[hour12] || '🕐';
+    
+    const clockEmojiSpan = document.getElementById('clock-emoji');
+    const clockTimeSpan = document.getElementById('clock-time');
+    
+    if (clockEmojiSpan) clockEmojiSpan.textContent = emoji;
+    if (clockTimeSpan) clockTimeSpan.textContent = timeString;
+}
+
+// Update clock immediately and every minute
+updateClock();
+setInterval(updateClock, 60000); // Update every minute (low lag)
