@@ -149,40 +149,75 @@ if (document.readyState === 'loading') {
     setupActionButtons();
 }
 
-// ========== CLOCK UPDATE (Timezone EST) ==========
+// ========== CLOCK UPDATE (Eastern Time - auto DST) ==========
 function updateClock() {
     const now = new Date();
     
-    // Convert to EST (UTC-5)
-    const estOffset = -5 * 60;
-    const localOffset = now.getTimezoneOffset();
-    const estTime = new Date(now.getTime() + (estOffset + localOffset) * 60000);
+    // Use Intl.DateTimeFormat to get Eastern Time (auto handles DST)
+    const easternTime = new Date().toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
     
-    let hours = estTime.getHours();
-    const minutes = estTime.getMinutes().toString().padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    // Get just the hour for the emoji (in Eastern Time)
+    const easternHour = new Date().toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        hour: 'numeric',
+        hour12: true
+    });
     
-    // Convert to 12-hour format
-    hours = hours % 12;
-    hours = hours ? hours : 12; // 12 instead of 0
+    // Parse hour for emoji (1-12)
+    let hourNum = parseInt(easternHour);
+    if (easternHour.includes('PM') && hourNum !== 12) hourNum += 12;
+    if (easternHour.includes('AM') && hourNum === 12) hourNum = 0;
     
-    const timeString = `${hours}:${minutes} ${ampm}`;
+    // Convert to 12-hour format for emoji (1-12)
+    let emojiHour = hourNum % 12;
+    if (emojiHour === 0) emojiHour = 12;
     
-    // Update clock emoji based on hour
-    const hour12 = hours % 12 || 12;
+    // Clock emojis mapping
     const clockEmojis = {
         1: '🕐', 2: '🕑', 3: '🕒', 4: '🕓', 5: '🕔', 6: '🕕',
         7: '🕖', 8: '🕗', 9: '🕘', 10: '🕙', 11: '🕚', 12: '🕛'
     };
-    const emoji = clockEmojis[hour12] || '🕐';
+    const emoji = clockEmojis[emojiHour] || '🕐';
+    
+    // Determine if EST or EDT
+    const isDST = isDaylightSaving();
+    const tzLabel = isDST ? 'EDT' : 'EST';
     
     const clockEmojiSpan = document.getElementById('clock-emoji');
     const clockTimeSpan = document.getElementById('clock-time');
+    const tzSpan = document.getElementById('timezone-label');
     
     if (clockEmojiSpan) clockEmojiSpan.textContent = emoji;
-    if (clockTimeSpan) clockTimeSpan.textContent = timeString;
+    if (clockTimeSpan) clockTimeSpan.textContent = easternTime;
+    if (tzSpan) tzSpan.textContent = tzLabel;
+}
+
+// Function to check if Daylight Saving Time is active in Eastern Time
+function isDaylightSaving() {
+    // Get March 8 and November 1 (DST boundaries for Eastern Time)
+    const now = new Date();
+    const year = now.getFullYear();
+    
+    // DST starts: Second Sunday in March (March 8-14)
+    const dstStart = new Date(year, 2, 8);
+    dstStart.setDate(8 + (7 - dstStart.getDay()) % 7);
+    
+    // DST ends: First Sunday in November (November 1-7)
+    const dstEnd = new Date(year, 10, 1);
+    dstEnd.setDate(1 + (7 - dstEnd.getDay()) % 7);
+    
+    // Check if current date is between DST start and end (in Eastern Time)
+    const easternNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const compareDate = new Date(easternNow);
+    
+    return compareDate >= dstStart && compareDate < dstEnd;
 }
 
 // Update clock immediately and every minute
 updateClock();
-setInterval(updateClock, 60000); // Update every minute (low lag)
+setInterval(updateClock, 60000);
